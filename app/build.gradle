@@ -1,0 +1,180 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-parcelize'
+    //protobuf生成
+    id "com.google.protobuf" version "0.8.12"
+}
+
+android {
+    compileSdk 31
+
+    defaultConfig {
+        applicationId "com.richmat.mytuya"
+        minSdk 21
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a"
+        }
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file('D:\\android demo\\MyTuYa\\key.jks')
+            storePassword 'Richmat123'
+            keyAlias 'RichTuya'
+            keyPassword 'Richmat123'
+        }
+        release {
+            storeFile file('D:\\android demo\\MyTuYa\\key.jks')
+            storePassword 'Richmat123'
+            keyAlias 'RichTuya'
+            keyPassword 'Richmat123'
+        }
+//        debug {
+//            storeFile file("./keystore/debug.keystore")
+//        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+        useIR = true
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+        kotlinCompilerVersion '1.5.21'
+    }
+    packagingOptions {
+        pickFirst 'lib/*/libc++_shared.so' // 多个aar存在此so，需要选择第一个
+//        pickFirst 'lib/*/libgnustl_shared.so'//业务包需要
+    }
+
+//    packagingOptions {
+//        pickFirst 'lib/*/libc++_shared.so' // 多个aar存在此so，需要选择第一个
+//        pickFirst 'lib/*/libgnustl_shared.so'//业务包需要
+//    }
+}
+
+kapt {
+    arguments {
+        // Make Hilt share the same definition of Components in tests instead of
+        // creating a new set of Components per test class.
+        arg("dagger.hilt.shareTestComponents", "true")
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'com.google.android.material:material:1.4.0'
+
+    implementation "androidx.compose.ui:ui:$compose_version"
+    implementation "androidx.compose.material:material-icons-extended:$compose_version"
+    implementation "androidx.compose.material:material:$compose_version"
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
+    implementation 'androidx.activity:activity-compose:1.3.1'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+
+    //下拉刷新
+    implementation ("com.google.accompanist:accompanist-swiperefresh:0.18.0")
+
+    //Coroutines
+//    debugImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2"
+//    debugImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
+
+    //涂鸦 这个玩意
+//    implementation 'com.tuya.smart:tuyasmart-bizbundle-device_activator:3.27.5-4'
+    implementation 'com.alibaba:fastjson:1.1.67.android'
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.14.9'
+    //为了使用fastjson，加的反射
+    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.5.20'
+//
+//    // The latest stable App SDK for Android.
+    implementation 'com.tuya.smart:tuyasmart:3.29.6'
+
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0-beta01'
+    implementation 'androidx.navigation:navigation-compose:2.4.0-alpha08'
+
+    implementation 'com.google.accompanist:accompanist-insets:0.16.0'
+    implementation 'com.google.accompanist:accompanist-navigation-animation:0.17.0'
+
+    //从网上拉图片时可用
+    implementation "io.coil-kt:coil-compose:1.3.2"
+
+    //hilt
+    implementation "com.google.dagger:hilt-android:2.38.1"
+    kapt "com.google.dagger:hilt-android-compiler:2.38.1"
+
+    //navigation 与hilt协作的工具 ，方便获取Viewmodel
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0-alpha03"
+    //viewmodel 的hilt，好多api废弃了，不知道有啥用
+//    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
+//    // When using Kotlin.
+//    kapt 'androidx.hilt:hilt-compiler:1.0.0-beta01'
+
+    //room
+    implementation 'androidx.room:room-runtime:2.3.0'
+    implementation 'androidx.room:room-ktx:2.3.0'
+
+    kapt 'androidx.room:room-compiler:2.3.0'
+
+    //Paging分页，待使用
+
+    //使用dataStore来储存账户的账号密码
+//datastore
+    implementation "androidx.datastore:datastore:1.0.0"
+    implementation "com.google.protobuf:protobuf-javalite:3.10.0"
+
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.10.0"
+    }
+
+    // Generates the java Protobuf-lite code for the Protobufs in this project. See
+    // https://github.com/google/protobuf-gradle-plugin#customizing-protobuf-compilation
+    // for more information.
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java {
+                    option 'lite'
+                }
+            }
+        }
+    }
+}

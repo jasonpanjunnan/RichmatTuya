@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option java_package = "com.richmat.mytuya";
+option java_multiple_files = true;
+
+message UserPreferences {
+  int32 id = 1;
+  string name = 2;
+  int32 age = 3;
+  string phone = 4;
+  string wifi_name = 5;
+  string wifi_password = 6;
+}
+//可以使用枚举
+//enum SortOrder {
+//    UNSPECIFIED = 0;
+//    NONE = 1;
+//    BY_DEADLINE = 2;
+//    BY_PRIORITY = 3;
+//    BY_DEADLINE_AND_PRIORITY = 4;
+//  }
+//  SortOrder sort_order = 2;
