@@ -6,11 +6,10 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Backpack
-import androidx.compose.material.icons.filled.Power
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterEnd
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -85,15 +84,14 @@ fun BulbLightScreen(
                         Text(stringResource(id = R.string.timing))
                     }
                 }
-
             }
         }
 
     ) {
-        Box(modifier = modifier, contentAlignment = Alignment.Center) {
+        Box(modifier = modifier, contentAlignment = Center) {
             Column {
                 DragGestureDemo(offset, changeOffset)
-                LightPicker()
+//                LightPicker()
             }
         }
     }
@@ -107,9 +105,7 @@ fun BulbLightScreen(
 //@Preview(o)
 @Composable
 fun DragGestureDemo(offset: Offset, changeOffset: (Offset) -> Unit) {
-//    var boxSize = 100.dp
-//    var offset by remember { mutableStateOf(Offset.Zero) }
-    Box(contentAlignment = Alignment.Center,
+    Box(contentAlignment = Center,
         modifier = Modifier
             .wrapContentSize()
             .fillMaxSize()
@@ -158,8 +154,29 @@ fun DragGestureDemo(offset: Offset, changeOffset: (Offset) -> Unit) {
 //            }
 //        )
 //        DrawArc4(Modifier.size(260.dp), offset, changeOffset)
-        DrawArc5(Modifier.size(260.dp), initAngle = 30.0,
-            ringWidth = 120f)
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Box(modifier = Modifier.size(260.dp), contentAlignment = Center) {
+                DrawArc5(initAngle = 30.0,
+                    ringWidth = 120f)
+                Icon(imageVector = Icons.Filled.Lightbulb,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxSize(0.25f),
+                    tint = Color.White)
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
+            Row(modifier = Modifier.padding(horizontal = 10.dp),
+                verticalAlignment = Alignment.CenterVertically) {
+                Icon(imageVector = Icons.Filled.LightMode, contentDescription = null)
+                Spacer(modifier = Modifier.height(5.dp))
+                LightPicker(modifier = Modifier.weight(1f))
+//                Slider(value = 10f, onValueChange = {}, modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.height(5.dp))
+                Text("50%")
+            }
+        }
+
     }
 }
 
@@ -205,7 +222,6 @@ fun Text(
         .fillMaxWidth()
         .Light_Palette(),
 ) {
-
     Layout(content = { /*TODO*/ }) { measures, constraints ->
         measures.mapIndexed { index, measurable ->
 
@@ -215,11 +231,12 @@ fun Text(
 }
 
 @Composable
-fun LightPicker() {
+fun LightPicker(modifier: Modifier = Modifier) {
     var process by remember {
         mutableStateOf(0.5f)
     }
     Slider(
+        modifier = modifier,
         value = process,
         onValueChange = {
             process = it

@@ -267,7 +267,6 @@ class FakePostsRepository @Inject constructor() : PostsRepository {
                 //更改名称，在这刷新
                 TuyaHomeSdk.getDataInstance().getDeviceBean(devId)
             }
-
         }
         return listener
     }

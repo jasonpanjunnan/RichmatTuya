@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronLeft
+import androidx.compose.material.icons.filled.Lightbulb
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,6 +24,7 @@ import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.pointer.consumeAllChanges
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -241,33 +243,36 @@ fun ShowArc5() {
 fun DrawArc5(modifier: Modifier = Modifier, initAngle: Double, ringWidth: Float) {
 
     var offset by remember {
-        mutableStateOf(Offset.Zero)
+        mutableStateOf(Offset(357.5f, 357.5f))
     }
+    var isFirst = true
+
+//    val lightImage = ImageBitmap.imageResource(id = R.drawable.gate)
 
     Canvas(modifier = modifier
         .fillMaxSize()
         .pointerInput(Unit) {
 
-//            detectDragGestures { change, dragAmount ->
-//                change.consumeAllChanges()
-//                offset += dragAmount
-//            }
+            detectDragGestures { change, dragAmount ->
+                change.consumeAllChanges()
+                offset += dragAmount
+            }
             //TODO 需要监听手指抬起放下
-            detectDragGestures(
-                onDragStart = {
-                    Log.e("TAG", "DrawArc5: onDragStart $it", )
-                },
-                onDragEnd = {
-                    Log.e("TAG", "DrawArc5: onDragEnd $", )
-                },
-                onDragCancel = {
-                    Log.e("TAG", "DrawArc5: onDragCancel $", )
-                },
-                onDrag = { change, dragAmount ->
-                    change.consumeAllChanges()
-                    offset += dragAmount
-                }
-            )
+//            detectDragGestures(
+//                onDragStart = {
+//                    Log.e("TAG", "DrawArc5: onDragStart $it")
+//                },
+//                onDragEnd = {
+//                    Log.e("TAG", "DrawArc5: onDragEnd $")
+//                },
+//                onDragCancel = {
+//                    Log.e("TAG", "DrawArc5: onDragCancel $")
+//                },
+//                onDrag = { change, dragAmount ->
+//                    change.consumeAllChanges()
+//                    offset += dragAmount
+//                }
+//            )
         }, onDraw = {
         val min = min(size.height, size.width)
         val padding = ringWidth / 2
@@ -288,7 +293,10 @@ fun DrawArc5(modifier: Modifier = Modifier, initAngle: Double, ringWidth: Float)
         drawCircle(color = Color(0xFF6F4D1B), center = largeCenter,
             radius = littleRadius)
 
-        var myAngle = atan2(offset.y.toDouble(), offset.x.toDouble()) * 180 / PI
+        //TODO 懂了懂了，开始的位置是Offset（0,0），所以滑动是从中心开始的，的想办法，根据角度更新一下位置。对对对吗？
+
+        var myAngle = atan2(offset.y, offset.x) * 180 / PI
+
         if (isOverAngle(myAngle)) {
             when {
                 myAngle < 90.0 -> {
@@ -300,10 +308,20 @@ fun DrawArc5(modifier: Modifier = Modifier, initAngle: Double, ringWidth: Float)
             }
         }
         val littleRingCenter = getOffsetByAngle(myAngle, largeRadius, largeCenter)
+        Log.e("TAG",
+            "DrawArc5: 3333 $myAngle, $offset, $littleRingCenter,   largeCenter: $largeCenter")
+        if (isFirst) {
+            isFirst = false
+            Log.e("TAG", "DrawArc5: first ")
+//            offset = littleRingCenter
+        }
 
         drawCircle(color = Color.White, center = littleRingCenter,
             radius = r, style = Stroke(width = 5f))
+
+//        drawImage(image = lightImage,topLeft = largeCenter,blendMode = BlendMode.SrcOver)
     })
+//    Icons.Filled.Lightbulb
 }
 
 @Preview(showBackground = true, widthDp = 160, heightDp = 160)

@@ -18,4 +18,12 @@ class BulbLightViewModel @Inject constructor(
     fun changeOffset(newOffset: Offset) {
         _offsetState.value = newOffset
     }
+
+    init {
+        //联网获取
+        val brightPercent = 800 //0 - 1000
+        val tempPercent = 0.8f // 10 - 1000
+
+        _offsetState.value = Offset(brightPercent.toFloat(), 1000f)
+    }
 }
