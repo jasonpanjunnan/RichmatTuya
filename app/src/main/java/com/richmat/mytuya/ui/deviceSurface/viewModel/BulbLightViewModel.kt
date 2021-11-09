@@ -19,11 +19,19 @@ class BulbLightViewModel @Inject constructor(
         _offsetState.value = newOffset
     }
 
+    private val _radianState = MutableStateFlow(0.0)
+    val radianState: StateFlow<Double> = _radianState
+
+    fun changeRadian(newRadian: Double) {
+        _radianState.value = newRadian
+    }
+
     init {
         //联网获取
         val brightPercent = 800 //0 - 1000
         val tempPercent = 0.8f // 10 - 1000
 
         _offsetState.value = Offset(brightPercent.toFloat(), 1000f)
+        _radianState.value = (brightPercent / 500).toDouble()
     }
 }

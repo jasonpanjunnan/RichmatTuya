@@ -1,7 +1,6 @@
 package com.richmat.mytuya.ui.deviceSurface
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -23,10 +22,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.compose.jetsurvey.theme.JetsurveyTheme
 import com.richmat.mytuya.R
-import com.richmat.mytuya.ui.deviceSetting.DrawArc4
 import com.richmat.mytuya.ui.deviceSetting.DrawArc5
+import com.richmat.mytuya.ui.deviceSetting.DrawCircle4
 import com.richmat.mytuya.ui.deviceSurface.viewModel.BulbLightViewModel
-import kotlin.math.*
+import kotlin.math.asin
+import kotlin.math.cos
+import kotlin.math.hypot
+import kotlin.math.sin
 
 
 @RequiresApi(Build.VERSION_CODES.N)
@@ -99,7 +101,8 @@ fun BulbLightScreen(
 
 /**
  * 实现思路：
- * 1.根据移动的位置坐标 获取角度 然后根据角度获取在圆环上的位置
+ * 1.根据移动的位置坐标 获取角度 然后根据角度获取在圆环上的位置。11.08 有问题，画布会一直移动，导致角度太小，或太大，很难完美控制
+ * 2.把环单独出来，把坐标移动到中心，offset的位置跟圆心位置一样
  */
 @RequiresApi(Build.VERSION_CODES.N)
 //@Preview(o)
@@ -110,54 +113,9 @@ fun DragGestureDemo(offset: Offset, changeOffset: (Offset) -> Unit) {
             .wrapContentSize()
             .fillMaxSize()
     ) {
-//        Log.e("TAG", "DragGestureDemo: ${Offset.Zero}")
-//        Box(Modifier
-//            .size(boxSize)
-//            .offset {
-//                IntOffset(offset.x.roundToInt(), offset.y.roundToInt())
-//            }
-//            .background(Color.Green)
-//            .pointerInput(Unit) {
-//                detectDragGestures(
-//                    onDragStart = { offset ->
-//                        // 拖动开始
-//                    },
-//                    onDragEnd = {
-//                        // 拖动结束
-//                    },
-//                    onDragCancel = {
-//                        // 拖动取消
-//                    },
-//                    onDrag = { change: PointerInputChange, dragAmount: Offset ->
-//                        // 拖动中
-//                        val newOffset = offset + dragAmount
-////                        val angle =
-////                            getAngle(newOffset.x.toDouble(), newOffset.y.toDouble(), Offset.Zero)
-//
-////                        根据角度求位置
-//                        val angle = atan2(newOffset.y.toDouble(), newOffset.x.toDouble()) * 180 / PI
-//                        //TODO 获取新位置之前，加一个判断，是否大于60，或者小于120
-//                        if (!isOverAngle(angle)){
-//                            val newNewOffset = getOffsetByAngle(angle, radius, Offset.Zero)
-//                            offset = newNewOffset
-//                            Log.e(
-//                                "TAG",
-//                                "DragGestureDemo: $offset, new: $newOffset, newnew: $newNewOffset, angle: $angle",
-//                            )
-//                        }
-//                        //根据弧度求位置
-////                        val angle = atan2(newOffset.y.toDouble(), newOffset.x.toDouble())
-////                        val newNewOffset = getOffsetByRadians(angle, radius, Offset.Zero)
-////                            offset += dragAmount
-//                    }
-//                )
-//            }
-//        )
-//        DrawArc4(Modifier.size(260.dp), offset, changeOffset)
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Box(modifier = Modifier.size(260.dp), contentAlignment = Center) {
-                DrawArc5(initAngle = 30.0,
-                    ringWidth = 120f)
+            Box(modifier = Modifier.size(300.dp), contentAlignment = Center) {
+                DrawArc5(initAngle = 30.0, ringWidth = 120f)
                 Icon(imageVector = Icons.Filled.Lightbulb,
                     contentDescription = null,
                     modifier = Modifier
@@ -185,6 +143,12 @@ fun isOverAngle(angle: Double): Boolean = (angle > 60.0 && angle < 120)
 fun getOffsetByAngle(angle: Double, radius: Float, center: Offset): Offset {
     val pointX = center.x + radius * cos(Math.toRadians(angle))
     val pointY = center.y + radius * sin(Math.toRadians(angle))
+    return Offset(pointX.toFloat(), pointY.toFloat())
+}
+
+fun getOffsetByRadian(radian: Double, radius: Float, center: Offset): Offset {
+    val pointX = center.x + radius * cos(radian)
+    val pointY = center.y + radius * sin(radian)
     return Offset(pointX.toFloat(), pointY.toFloat())
 }
 

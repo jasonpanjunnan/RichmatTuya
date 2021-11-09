@@ -1,8 +1,6 @@
 package com.richmat.mytuya.ui.deviceSetting
 
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
@@ -10,7 +8,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronLeft
-import androidx.compose.material.icons.filled.Lightbulb
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,12 +16,11 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.drawscope.rotate
+import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.pointer.consumeAllChanges
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -35,6 +31,8 @@ import com.example.compose.jetsurvey.theme.Red800
 import com.richmat.mytuya.R
 import com.richmat.mytuya.ui.components.DevPicAndName
 import com.richmat.mytuya.ui.deviceSurface.getOffsetByAngle
+import com.richmat.mytuya.ui.deviceSurface.getOffsetByRadian
+import com.richmat.mytuya.ui.deviceSurface.getOffsetByRadians
 import com.richmat.mytuya.ui.deviceSurface.isOverAngle
 import com.richmat.mytuya.ui.searchResult.RenameDialog
 import kotlin.math.*
@@ -133,103 +131,6 @@ fun DrawLine(modifier: Modifier = Modifier) {
     })
 }
 
-@RequiresApi(Build.VERSION_CODES.N)
-@Preview(name = "无题", showBackground = false, widthDp = 160, heightDp = 160)
-@Composable
-fun ShowCircle() {
-    JetsurveyTheme {
-        DrawArc4(centerOffset = Offset.Zero, changeOffset = { })
-    }
-}
-
-@RequiresApi(Build.VERSION_CODES.N)
-@Composable
-fun DrawArc4(
-    modifier: Modifier = Modifier,
-    centerOffset: Offset,
-    changeOffset: (Offset) -> Unit,
-) {
-    val width = 45f
-    var angle by remember {
-        mutableStateOf(30.0)
-    }
-//    val angle = 30.0
-
-    Canvas(modifier = modifier
-        .padding(25.dp)
-        .fillMaxSize(), onDraw = {
-        val canvasWidth = size.width
-        val canvasHeight = size.height
-        val largeX = canvasWidth / 2
-        val largeY = canvasHeight / 2
-        val radius = min(canvasWidth, canvasHeight) / 3
-
-        val largeRadius = min(canvasWidth, canvasHeight) / 2
-        val center = Offset(radius, radius)
-
-
-        val pointX = largeX + largeRadius * cos(Math.toRadians(60.0))
-        val pointY = largeY + largeRadius * sin(Math.toRadians(60.0))
-        val littleCenter = getOffsetByAngle(angle, largeRadius, Offset(largeX, largeY))
-//        val littleCenter = getOffsetByAngle(angle, largeRadius, Offset(largeX, largeY))
-        drawArc(
-            brush = Brush.linearGradient(colors = listOf(Color.Yellow, Color.LightGray)),
-            startAngle = 60f,
-            sweepAngle = -300f,
-            useCenter = false,
-            style = Stroke(width = width, cap = StrokeCap.Round),
-            size = Size(largeRadius * 2, largeRadius * 2)
-        )
-
-        //这是调用原来canvas的地方，比如绘制文字
-//        nativeCanvas
-        drawIntoCanvas { canvas ->
-//            canvas.nativeCanvas.drawText()
-        }
-        drawCircle(color = Color(0xFF6F4D1B), center = Offset(largeX, largeY),
-            radius = radius)
-
-        drawCircle(color = Color.Red, center = Offset(pointX.toFloat(), pointY.toFloat()),
-            radius = width / 2, style = Stroke(width = 5f))
-    })
-//    var offset by remember { mutableStateOf(Offset.Zero) }
-    Canvas(modifier = modifier
-        .padding(25.dp)
-        .pointerInput(Unit) {
-            detectDragGestures { change, dragAmount ->
-                val newOffset = centerOffset + dragAmount
-//                        根据角度求位置
-                val myAngle = atan2(newOffset.y.toDouble(), newOffset.x.toDouble()) * 180 / PI
-//                val myAngle = atan2(newOffset.y.toDouble(), newOffset.x.toDouble()) * 180 / PI
-
-//                Log.e("TAG", "DrawArc4 2222222222222: $radius, $center")
-                //TODO 获取新位置之前，加一个判断，是否大于60，或者小于120
-                if (!isOverAngle(myAngle)) {
-                    angle = myAngle
-//                    val newNewOffset = getOffsetByAngle(myAngle, radius, center)
-//                    offset = newNewOffset
-                    Log.e(
-                        "TAG",
-                        "DragGestureDemo: , angle: $myAngle, newOffset :$newOffset,offset: $centerOffset, dragAmount: $dragAmount",
-                    )
-                }
-            }
-//        detectDragGestures()
-        }, onDraw = {
-        val canvasWidth = size.width
-        val canvasHeight = size.height
-        val radius = min(canvasWidth, canvasHeight) / 2
-        val center = Offset(radius, radius)
-        val littleCenter = getOffsetByAngle(angle, radius, center)
-        changeOffset(littleCenter)
-        Log.e("TAG",
-            "DrawArc4 11111111111: $angle,littleCenter :$littleCenter,offset: $centerOffset")
-
-        drawCircle(color = Color.Black, center = littleCenter,
-            radius = width / 2, style = Stroke(width = 5f))
-    })
-}
-
 @Preview
 @Composable
 fun ShowArc5() {
@@ -243,19 +144,30 @@ fun ShowArc5() {
 fun DrawArc5(modifier: Modifier = Modifier, initAngle: Double, ringWidth: Float) {
 
     var offset by remember {
-        mutableStateOf(Offset(357.5f, 357.5f))
+        mutableStateOf(Offset.Zero)
     }
-    var isFirst = true
 
-//    val lightImage = ImageBitmap.imageResource(id = R.drawable.gate)
+    var myAngle by remember {
+        mutableStateOf(60.0)
+    }
 
     Canvas(modifier = modifier
         .fillMaxSize()
         .pointerInput(Unit) {
-
             detectDragGestures { change, dragAmount ->
+                Log.e("TAG", "DrawArc5: $change $size,")
+                val newOffset = offset + dragAmount
+                val min = min(size.height, size.width)
+                val padding = ringWidth / 2
+                val largeRadius = min / 2 - padding
+                if (newOffset.getDistance() > largeRadius) return@detectDragGestures
+
                 change.consumeAllChanges()
-                offset += dragAmount
+                offset = newOffset
+                myAngle = atan2(offset.y, offset.x) * 180 / PI
+                val radian = Math.toRadians(myAngle)
+                val littleRingCenter = getOffsetByRadian(radian, largeRadius.toFloat(), Offset.Zero)
+//                val littleRingCenter = getOffsetByAngle(myAngle, largeRadius, Offset.Zero)
             }
             //TODO 需要监听手指抬起放下
 //            detectDragGestures(
@@ -274,12 +186,9 @@ fun DrawArc5(modifier: Modifier = Modifier, initAngle: Double, ringWidth: Float)
 //                }
 //            )
         }, onDraw = {
-        val min = min(size.height, size.width)
+        val min = size.minDimension
         val padding = ringWidth / 2
         val largeRadius = min / 2 - padding
-        val littleRadius = min / 3 - padding
-        val r = ringWidth / 2
-        val largeCenter = Offset(min / 2, min / 2)
 
         drawArc(
             brush = Brush.horizontalGradient(colors = listOf(Color.Yellow, Color.LightGray)),
@@ -290,38 +199,100 @@ fun DrawArc5(modifier: Modifier = Modifier, initAngle: Double, ringWidth: Float)
             size = Size(largeRadius * 2, largeRadius * 2),
             topLeft = Offset(padding, padding)
         )
-        drawCircle(color = Color(0xFF6F4D1B), center = largeCenter,
-            radius = littleRadius)
+        val minRadius = size.minDimension / 2
+        translate(left = minRadius, top = minRadius) {
+            val min = size.minDimension
+            val padding = ringWidth / 2
+            val largeRadius = min / 2 - padding
+            val littleRadius = min / 3 - padding
+            val r = ringWidth / 2
+//        val largeCenter = Offset(min / 2, min / 2)
 
-        //TODO 懂了懂了，开始的位置是Offset（0,0），所以滑动是从中心开始的，的想办法，根据角度更新一下位置。对对对吗？
+            drawCircle(color = Color(0xFF6F4D1B), center = Offset.Zero,
+                radius = littleRadius)
 
-        var myAngle = atan2(offset.y, offset.x) * 180 / PI
+            //TODO 懂了懂了，开始的位置是Offset（0,0），所以滑动是从中心开始的，的想办法，根据角度更新一下位置。对对对吗？
+            //TODO 不对不对，原来atan2一直都是以左上角为圆心的，原来跟着动是因为画布的关系，那怎么办呢？？？
 
-        if (isOverAngle(myAngle)) {
-            when {
-                myAngle < 90.0 -> {
-                    myAngle = 60.0
-                }
-                myAngle > 90.0 -> {
-                    myAngle = 120.0
+            //TODO 这块也应该放到手势里边，不然可能不好处理
+            if (isOverAngle(myAngle)) {
+                when {
+                    myAngle < 90.0 -> {
+                        myAngle = 60.0
+                    }
+                    myAngle > 90.0 -> {
+                        myAngle = 120.0
+                    }
                 }
             }
-        }
-        val littleRingCenter = getOffsetByAngle(myAngle, largeRadius, largeCenter)
-        Log.e("TAG",
-            "DrawArc5: 3333 $myAngle, $offset, $littleRingCenter,   largeCenter: $largeCenter")
-        if (isFirst) {
-            isFirst = false
-            Log.e("TAG", "DrawArc5: first ")
-//            offset = littleRingCenter
-        }
+            val littleRingCenter = getOffsetByAngle(myAngle, largeRadius, Offset.Zero)
 
-        drawCircle(color = Color.White, center = littleRingCenter,
-            radius = r, style = Stroke(width = 5f))
+            drawCircle(color = Color.White, center = littleRingCenter,
+                radius = r, style = Stroke(width = 5f))
 
-//        drawImage(image = lightImage,topLeft = largeCenter,blendMode = BlendMode.SrcOver)
+            drawPoints(points = listOf(offset),
+                color = Color.Black,
+                pointMode = PointMode.Points,
+                strokeWidth = 20f)
+        }
     })
-//    Icons.Filled.Lightbulb
+}
+
+@Preview(name = "DrawCircle4")
+@Composable
+fun Show() {
+    DrawCircle4(width = 5f, maxRadius = 30f)
+}
+
+/**
+ * 第二种思路
+ * ,可以准备功成身退了
+ */
+@Composable
+fun DrawCircle4(modifier: Modifier = Modifier, width: Float, maxRadius: Float) {
+    //获取圆环实际半径
+    val radius = maxRadius - width / 2
+    var myCenter by remember {
+        mutableStateOf(Offset.Zero)
+    }
+
+    var offset by remember {
+        mutableStateOf(Offset.Zero)
+    }
+
+    Canvas(modifier = modifier
+        .fillMaxSize()
+        .pointerInput(Unit) {
+            detectDragGestures { change, dragAmount ->
+                val newOffset = offset + dragAmount
+                val largeRadius = min(size.width, size.height)
+                if (newOffset.x.absoluteValue > largeRadius || newOffset.y.absoluteValue > largeRadius) return@detectDragGestures
+                offset = newOffset
+                val myAngle = atan2(offset.y, offset.x) * 180 / PI
+                val radian = Math.toRadians(myAngle)
+                val littleRingCenter = getOffsetByRadian(radian, largeRadius.toFloat(), Offset.Zero)
+//                val littleRingCenter = getOffsetByAngle(myAngle, largeRadius.toFloat(), Offset.Zero)
+                myCenter = littleRingCenter
+            }
+        }, onDraw = {
+        val minRadius = size.minDimension / 2
+        translate(left = minRadius, top = minRadius) {
+            drawCircle(Color.Red, radius = radius, style = Stroke(width = width), center = myCenter)
+
+            drawPoints(points = listOf(offset),
+                color = Color.Black,
+                pointMode = PointMode.Points,
+                strokeWidth = 20f)
+        }
+    })
+}
+
+//不用管那么多，只要你是个环就行了，反正我是offset的，有点绕，但是有道理，有道理个屁
+
+fun fixOffset(offset: Offset, radius: Float, littleRingCenter: Offset): Offset {
+    val x = littleRingCenter.x - radius
+    val y = littleRingCenter.y - radius
+    return Offset(x, y)
 }
 
 @Preview(showBackground = true, widthDp = 160, heightDp = 160)
