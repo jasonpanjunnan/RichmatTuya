@@ -136,12 +136,17 @@ fun DrawLine(modifier: Modifier = Modifier) {
 fun ShowArc5() {
     JetsurveyTheme {
         DrawArc5(modifier = Modifier.size(260.dp), initAngle = 30.0,
-            ringWidth = 45f)
+            ringWidth = 45f, ringStrokeWidth = 6f)
     }
 }
 
 @Composable
-fun DrawArc5(modifier: Modifier = Modifier, initAngle: Double, ringWidth: Float) {
+fun DrawArc5(
+    modifier: Modifier = Modifier,
+    initAngle: Double,
+    ringWidth: Float,
+    ringStrokeWidth: Float,
+) {
 
     var offset by remember {
         mutableStateOf(Offset.Zero)
@@ -192,8 +197,9 @@ fun DrawArc5(modifier: Modifier = Modifier, initAngle: Double, ringWidth: Float)
 
         drawArc(
             brush = Brush.horizontalGradient(colors = listOf(Color.Yellow, Color.LightGray)),
-            startAngle = 60f,
-            sweepAngle = -300f,
+            //正负代表方向。看起点就可以了
+            startAngle = 120f,
+            sweepAngle = 300f,
             useCenter = false,
             style = Stroke(width = ringWidth, cap = StrokeCap.Round),
             size = Size(largeRadius * 2, largeRadius * 2),
@@ -201,12 +207,8 @@ fun DrawArc5(modifier: Modifier = Modifier, initAngle: Double, ringWidth: Float)
         )
         val minRadius = size.minDimension / 2
         translate(left = minRadius, top = minRadius) {
-            val min = size.minDimension
-            val padding = ringWidth / 2
-            val largeRadius = min / 2 - padding
             val littleRadius = min / 3 - padding
-            val r = ringWidth / 2
-//        val largeCenter = Offset(min / 2, min / 2)
+            val r = (ringWidth - ringStrokeWidth) / 2
 
             drawCircle(color = Color(0xFF6F4D1B), center = Offset.Zero,
                 radius = littleRadius)
@@ -228,7 +230,7 @@ fun DrawArc5(modifier: Modifier = Modifier, initAngle: Double, ringWidth: Float)
             val littleRingCenter = getOffsetByAngle(myAngle, largeRadius, Offset.Zero)
 
             drawCircle(color = Color.White, center = littleRingCenter,
-                radius = r, style = Stroke(width = 5f))
+                radius = r, style = Stroke(width = ringStrokeWidth))
 
             drawPoints(points = listOf(offset),
                 color = Color.Black,

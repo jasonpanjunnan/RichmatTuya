@@ -27,7 +27,7 @@ class BulbLightViewModel @Inject constructor(
     }
 
     init {
-        //联网获取
+        //联网获取。x轴代表冷暖值，两边统一一下就可以了
         val brightPercent = 800 //0 - 1000
         val tempPercent = 0.8f // 10 - 1000
 

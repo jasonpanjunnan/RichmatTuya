@@ -88,7 +88,6 @@ fun BulbLightScreen(
                 }
             }
         }
-
     ) {
         Box(modifier = modifier, contentAlignment = Center) {
             Column {
@@ -113,9 +112,11 @@ fun DragGestureDemo(offset: Offset, changeOffset: (Offset) -> Unit) {
             .wrapContentSize()
             .fillMaxSize()
     ) {
+//        TODO这个估计用得上
+//        LaunchedEffect
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Box(modifier = Modifier.size(300.dp), contentAlignment = Center) {
-                DrawArc5(initAngle = 30.0, ringWidth = 120f)
+                DrawArc5(initAngle = 30.0, ringWidth = 120f, ringStrokeWidth = 6f)
                 Icon(imageVector = Icons.Filled.Lightbulb,
                     contentDescription = null,
                     modifier = Modifier
@@ -134,7 +135,6 @@ fun DragGestureDemo(offset: Offset, changeOffset: (Offset) -> Unit) {
                 Text("50%")
             }
         }
-
     }
 }
 
