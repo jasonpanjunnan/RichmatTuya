@@ -135,43 +135,59 @@ fun DrawLine(modifier: Modifier = Modifier) {
 @Composable
 fun ShowArc5() {
     JetsurveyTheme {
-        DrawArc5(modifier = Modifier.size(260.dp), initAngle = 30.0,
-            ringWidth = 45f, ringStrokeWidth = 6f)
+        DrawArc5(modifier = Modifier.size(260.dp), radian = 30.0,
+            ringWidth = 45f, ringStrokeWidth = 6f, changeRadian = {})
     }
 }
 
 @Composable
 fun DrawArc5(
     modifier: Modifier = Modifier,
-    initAngle: Double,
+    radian: Double,
+    changeRadian: (Double) -> Unit,
     ringWidth: Float,
     ringStrokeWidth: Float,
 ) {
-
+    Log.e("TAG", "DrawArc5:, $radian")
     var offset by remember {
         mutableStateOf(Offset.Zero)
     }
 
-    var myAngle by remember {
-        mutableStateOf(60.0)
-    }
+//    var myAngle by remember {
+//        mutableStateOf(60.0)
+//    }
 
     Canvas(modifier = modifier
         .fillMaxSize()
         .pointerInput(Unit) {
             detectDragGestures { change, dragAmount ->
-                Log.e("TAG", "DrawArc5: $change $size,")
-                val newOffset = offset + dragAmount
+                Log.e("TAG", "DrawArc5: $change, Offset: $offset")
                 val min = min(size.height, size.width)
                 val padding = ringWidth / 2
                 val largeRadius = min / 2 - padding
+                //很笨的办法，希望有更好的初始化方法
+                if (offset == Offset.Zero) {
+                    offset = getOffsetByRadian(radian = radian, radius = largeRadius, Offset.Zero)
+                }
+                val newOffset = offset + dragAmount
                 if (newOffset.getDistance() > largeRadius) return@detectDragGestures
 
                 change.consumeAllChanges()
-                offset = newOffset
-                myAngle = atan2(offset.y, offset.x) * 180 / PI
-                val radian = Math.toRadians(myAngle)
-                val littleRingCenter = getOffsetByRadian(radian, largeRadius.toFloat(), Offset.Zero)
+                var myAngle = atan2(newOffset.y, newOffset.x) * 180 / PI
+                if (isOverAngle(myAngle)) {
+                    when {
+                        myAngle < 90.0 -> {
+                            myAngle = 60.0
+                        }
+                        myAngle > 90.0 -> {
+                            myAngle = 120.0
+                        }
+                    }
+                } else {
+                    offset = newOffset
+                }
+//                val radian = Math.toRadians(myAngle)
+                changeRadian(Math.toRadians(myAngle))
 //                val littleRingCenter = getOffsetByAngle(myAngle, largeRadius, Offset.Zero)
             }
             //TODO 需要监听手指抬起放下
@@ -217,17 +233,18 @@ fun DrawArc5(
             //TODO 不对不对，原来atan2一直都是以左上角为圆心的，原来跟着动是因为画布的关系，那怎么办呢？？？
 
             //TODO 这块也应该放到手势里边，不然可能不好处理
-            if (isOverAngle(myAngle)) {
-                when {
-                    myAngle < 90.0 -> {
-                        myAngle = 60.0
-                    }
-                    myAngle > 90.0 -> {
-                        myAngle = 120.0
-                    }
-                }
-            }
-            val littleRingCenter = getOffsetByAngle(myAngle, largeRadius, Offset.Zero)
+//            if (isOverAngle(myAngle)) {
+//                when {
+//                    myAngle < 90.0 -> {
+//                        myAngle = 60.0
+//                    }
+//                    myAngle > 90.0 -> {
+//                        myAngle = 120.0
+//                    }
+//                }
+//            }
+//            val littleRingCenter = getOffsetByAngle(myAngle, largeRadius, Offset.Zero)
+            val littleRingCenter = getOffsetByRadian(radian, largeRadius, Offset.Zero)
 
             drawCircle(color = Color.White, center = littleRingCenter,
                 radius = r, style = Stroke(width = ringStrokeWidth))
@@ -238,6 +255,14 @@ fun DrawArc5(
                 strokeWidth = 20f)
         }
     })
+}
+
+fun getYByRatio(ratio: Float, radius: Float): Offset? {
+    if (ratio < 0 && ratio > 2) return null
+    val myRatio = ratio - 1
+    val x = radius * myRatio
+    val y = sqrt(radius * radius - x * x)
+    return Offset(x, y)
 }
 
 @Preview(name = "DrawCircle4")

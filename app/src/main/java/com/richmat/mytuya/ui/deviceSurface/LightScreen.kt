@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import com.example.compose.jetsurvey.theme.JetsurveyTheme
 import com.richmat.mytuya.R
 import com.richmat.mytuya.ui.deviceSetting.DrawArc5
-import com.richmat.mytuya.ui.deviceSetting.DrawCircle4
 import com.richmat.mytuya.ui.deviceSurface.viewModel.BulbLightViewModel
 import kotlin.math.asin
 import kotlin.math.cos
@@ -35,8 +34,15 @@ import kotlin.math.sin
 @Composable
 fun BulbLight(back: () -> Unit, setting: () -> Unit, viewModel: BulbLightViewModel) {
     val offset by viewModel.offsetState.collectAsState()
-    BulbLightScreen(back = back, setting = setting, powerOff = {}, offset = offset,
-        changeOffset = { viewModel.changeOffset(it) })
+    val radian by viewModel.radianState.collectAsState()
+    BulbLightScreen(
+        back = back, setting = setting, powerOff = {}, offset = offset,
+        changeOffset = { viewModel.changeOffset(it) },
+        radian = radian,
+        changeRadian = {
+            viewModel.changeRadian(it)
+        }
+    )
 }
 
 @RequiresApi(Build.VERSION_CODES.N)
@@ -49,6 +55,8 @@ fun BulbLightScreen(
     powerOff: () -> Unit,
     offset: Offset,
     changeOffset: (Offset) -> Unit,
+    radian: Double,
+    changeRadian: (Double) -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -91,7 +99,7 @@ fun BulbLightScreen(
     ) {
         Box(modifier = modifier, contentAlignment = Center) {
             Column {
-                DragGestureDemo(offset, changeOffset)
+                DragGestureDemo(offset, changeOffset, radian = radian, changeRadian = changeRadian)
 //                LightPicker()
             }
         }
@@ -102,11 +110,17 @@ fun BulbLightScreen(
  * 实现思路：
  * 1.根据移动的位置坐标 获取角度 然后根据角度获取在圆环上的位置。11.08 有问题，画布会一直移动，导致角度太小，或太大，很难完美控制
  * 2.把环单独出来，把坐标移动到中心，offset的位置跟圆心位置一样
+ * 3.第三种初步思路，获取手指按下的坐标，根据坐标来操作，这样应该可以避免canvas乱跑的问题，或许吧,不太行感觉，没试
  */
 @RequiresApi(Build.VERSION_CODES.N)
 //@Preview(o)
 @Composable
-fun DragGestureDemo(offset: Offset, changeOffset: (Offset) -> Unit) {
+fun DragGestureDemo(
+    offset: Offset,
+    changeOffset: (Offset) -> Unit,
+    radian: Double,
+    changeRadian: (Double) -> Unit,
+) {
     Box(contentAlignment = Center,
         modifier = Modifier
             .wrapContentSize()
@@ -114,9 +128,20 @@ fun DragGestureDemo(offset: Offset, changeOffset: (Offset) -> Unit) {
     ) {
 //        TODO这个估计用得上
 //        LaunchedEffect
+        LaunchedEffect(key1 = offset, block = {
+
+        })
+        DisposableEffect(key1 = 1, effect = {
+            onDispose {
+
+            }
+        })
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Box(modifier = Modifier.size(300.dp), contentAlignment = Center) {
-                DrawArc5(initAngle = 30.0, ringWidth = 120f, ringStrokeWidth = 6f)
+                DrawArc5(radian = radian,
+                    ringWidth = 120f,
+                    ringStrokeWidth = 6f,
+                    changeRadian = changeRadian)
                 Icon(imageVector = Icons.Filled.Lightbulb,
                     contentDescription = null,
                     modifier = Modifier
@@ -225,11 +250,15 @@ fun showLightPicker() {
 @Composable
 fun showLightPicker11() {
     JetsurveyTheme {
-        BulbLightScreen(back = {},
+        BulbLightScreen(
+            back = {},
             setting = {},
             powerOff = {},
             offset = Offset.Zero,
-            changeOffset = {})
+            changeOffset = {},
+            changeRadian = {},
+            radian = 30.0,
+        )
     }
 }
 
