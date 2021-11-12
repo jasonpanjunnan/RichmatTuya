@@ -71,4 +71,6 @@
     <string name="please_configure_gate">添加设备需要配置网关，请前往配置</string>
     <string name="configure_wireless_gate">配置无线网关</string>
     <string name="rename">重命名</string>
+
+    <string name="all_device">所有设备</string>
 </resources>

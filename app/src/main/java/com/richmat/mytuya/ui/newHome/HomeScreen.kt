@@ -28,8 +28,8 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import java.time.LocalDateTime
 
-val duration = 500
-val offset = 1000
+internal const val duration = 500
+internal const val offset = 1000
 
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi

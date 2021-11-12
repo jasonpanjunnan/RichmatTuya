@@ -196,11 +196,11 @@ private fun TabSelect(
             .background(MaterialTheme.colors.primary)
 //            .align(CenterHorizontally)
     ) {
-        if (roomList.isEmpty()) {
-//            return
-        } else {
-            ScrollableRomeRow(roomList, modifier = Modifier.weight(9f))
-        }
+//        if (roomList.isEmpty()) {
+////            return
+//        } else {
+        ScrollableRomeRow(roomList, modifier = Modifier.weight(9f))
+//        }
 //        Box(
 //            modifier = Modifier
 //                .weight(1.5f)
@@ -291,29 +291,36 @@ fun ScrollableRomeRow(
 //        indicator = emptyTabIndicator,
         modifier = modifier
     ) {
-        roomList.forEachIndexed { index, category ->
-            Tab(
-                selected = index == selected,
-                onClick = {
-                    selected = index
+        if (roomList.isEmpty()) {
+//            Text(text = stringResource(id = R.string.all_device))
+//            Text(text = stringResource(id = R.string.all_device))
+            ChoiceChipContent(text = stringResource(id = R.string.all_device), selected = true)
+        } else {
+            roomList.forEachIndexed { index, category ->
+                Tab(
+                    selected = index == selected,
+                    onClick = {
+                        selected = index
 //                    TODO 修改此处实现房间的切换，下面是之前使用假数据的实现
 //                    viewModel.changeLocation(category.name)
 
 //                    onCategorySelected(category)
+                    }
+                ) {
+                    ChoiceChipContent(
+                        text = category.name,
+                        selected = index == selected,
+                        modifier = Modifier.padding(horizontal = 4.dp, vertical = 16.dp)
+                    )
                 }
-            ) {
-                ChoiceChipContent(
-                    text = category.name,
-                    selected = index == selected,
-                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 16.dp)
-                )
             }
         }
+
     }
 }
 
 @Composable
-fun ChoiceChipContent(text: String, selected: Boolean, modifier: Modifier) {
+fun ChoiceChipContent(text: String, selected: Boolean, modifier: Modifier = Modifier) {
     Surface(
         color = when {
             selected -> MaterialTheme.colors.primary.copy(alpha = 0.08f)
@@ -441,8 +448,6 @@ fun checkIfOnline(context: Context): Boolean {
     }
 }
 
-
-val roomlist = listOf("所有设备", "客厅", "厨房", "洗衣机", "洗手间", "卧室", "仓库", "书房", "外码")
 val automaticList = listOf("11", "一键执行")
 
 //此处绕了个远路

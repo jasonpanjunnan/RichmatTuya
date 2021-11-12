@@ -110,7 +110,8 @@ fun SelectDeviceScreen(
             zigbeeGateList = uiState.zigbeeGateList,
             navigate = {
                 viewModel.getRoute(it)?.let { route ->
-                    navController.navigate("$route/${"yingyingying"}") {
+                    navController.navigate(route) {
+//                    navController.navigate("$route/${"yingyingying"}") {
                         popUpTo(navController.graph.findStartDestination().id) {
                             //此项可控制是否退出首项 StartDestination
 //                    inclusive = true

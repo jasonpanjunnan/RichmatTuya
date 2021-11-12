@@ -39,7 +39,8 @@ fun SearchResultScreen(
     ResultScreen(
         modifier = Modifier.fillMaxSize(),
         onClick = {
-            complete("${state.route}/${"yingyingyingyingyingying"}")
+            complete(state.route)
+//            complete("${state.route}/${"yingyingyingyingyingying"}")
 //            complete(state.devResultMassage.getNavigationArgumentRoute())
         },
         name = state.name,

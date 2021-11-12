@@ -186,7 +186,7 @@ fun DrawArc5(
                     offset = newOffset
                 }
                 val myRadian = Math.toRadians(myAngle)
-                //获取x轴的长度除以直径，得到百分比.此方式不行，因为newoffset不是圆上的坐标
+                //第一种：获取x轴的长度除以直径，得到百分比.此方式不行，因为newoffset不是圆上的坐标
 //                val percent = ((newOffset.x - largeRadius) / (largeRadius * 2)).absoluteValue
                 //第二种，直接根据弧度求比例，不需要半径.牛逼卧槽，几年级，8年级的题，卧槽
                 val percent = ((cos(myRadian) - 1) / 2).absoluteValue

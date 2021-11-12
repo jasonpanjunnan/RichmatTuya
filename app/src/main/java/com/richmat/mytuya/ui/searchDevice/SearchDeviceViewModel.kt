@@ -74,6 +74,7 @@ class SearchDeviceViewModel @Inject constructor(
 
     val searchStep = repository.observeConnectStep().stateIn(
         scope = viewModelScope,
+        //这个玩意是代表流关闭的时间，在程序进入后台超过设定时间时关闭flow，相当于一个缓冲时间
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = ConnectStep.ConnectFirst(step = "")
     )
