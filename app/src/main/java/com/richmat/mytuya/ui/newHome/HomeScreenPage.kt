@@ -11,6 +11,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -121,7 +122,7 @@ fun Component(
         //下拉刷新，需要克滑动的布局.想要整体都能滑动，需要把其他部分，放到网格布局里边（这样也不行，只占了一半），不然滑动冲突
         //解决了，分开装
         Column {
-            LazyColumn {
+            LazyColumn(state = LazyListState()) {
                 item {
                     HomeMenu(navController = navController, homeID = homeBean.homeId)
                     Card(backgroundColor = Color.White, modifier = Modifier.padding(10.dp)) {
@@ -146,11 +147,8 @@ fun Component(
                     removeScreenVisible = true
                 }, onClick = navigate)
             }
-
         }
     }
-
-
 
     AnimatedVisibility(
         visible = removeScreenVisible,
@@ -168,7 +166,6 @@ fun Component(
             removeDeviceSet = removeDeviceSet
         )
     }
-
     ShowWarningDialog(isShowWarning, eventList = eventList, dismissClick = dismissClick)
 }
 

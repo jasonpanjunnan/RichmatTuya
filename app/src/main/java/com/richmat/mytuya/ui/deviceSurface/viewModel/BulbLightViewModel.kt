@@ -1,11 +1,14 @@
 package com.richmat.mytuya.ui.deviceSurface.viewModel
 
+import android.util.Log
 import androidx.compose.ui.geometry.Offset
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.PI
 import kotlin.math.atan2
@@ -25,8 +28,12 @@ class BulbLightViewModel @Inject constructor(
     private val _radianState = MutableStateFlow(0.0)
     val radianState: StateFlow<Double> = _radianState
 
-    fun changeRadian(newRadian: Double) {
+    fun changeRadian(newRadian: Double, percent: Float) {
         _radianState.value = newRadian
+        val bright = percent * 1000
+        viewModelScope.launch {
+            Log.e("TAG", "changeRadian: $bright，$percent")
+        }
     }
 
     init {

@@ -3,6 +3,9 @@ package com.richmat.mytuya.ui.searchDevice
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import com.richmat.mytuya.ui.searchDevice.DeviceSearch.DEVICE_BIND_SUCCESS
+import com.richmat.mytuya.ui.searchDevice.DeviceSearch.DEVICE_FIND
+import com.richmat.mytuya.ui.searchDevice.DeviceSearch.DEVICE_SEARCH_FINISH
 
 sealed class Search {
     data class Wifi(val undefined: String) : Search()
@@ -27,9 +30,11 @@ sealed class ConnectStep {
     data class ConnectSuccess(val value: Float = 1f, val step: String) : ConnectStep()
 }
 
-const val DEVICE_FIND = "device_find"
-const val DEVICE_BIND_SUCCESS = "device_bind_success"
-const val DEVICE_SEARCH_FINISH = "device_search_finish"
+object DeviceSearch {
+    const val DEVICE_FIND = "device_find"
+    const val DEVICE_BIND_SUCCESS = "device_bind_success"
+    const val DEVICE_SEARCH_FINISH = "device_search_finish"
+}
 
 data class SearchStep(val step: String, val data: Any?) {
     fun getConnectStep(): ConnectStep = when (step) {

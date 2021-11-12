@@ -2,15 +2,20 @@ package com.richmat.mytuya.util.data
 
 import android.os.Parcelable
 import com.richmat.mytuya.ui.newHome.DevicePage
+import com.richmat.mytuya.util.data.DeviceId.BODY_SENSOR
+import com.richmat.mytuya.util.data.DeviceId.Bulb_Light
+import com.richmat.mytuya.util.data.DeviceId.ZIGBEE_GATE
 import kotlinx.parcelize.Parcelize
 
 const val TAG = "colin"
 
 //device id，可能在别的地方有用，最后实在无用的话，可以放到DeviceListener
 //TODO 这个可以放在，各自页面或者viewmodel的里边
-const val ZIGBEE_GATE = "6c80187158c8e57d0dcu4n"
-const val BODY_SENSOR = "6c270c207031f293a8byl7"
-const val Bulb_Light = "6cbbc8ea04e98834d9vcpd"
+object DeviceId {
+    const val ZIGBEE_GATE = "6c80187158c8e57d0dcu4n"
+    const val BODY_SENSOR = "6c270c207031f293a8byl7"
+    const val Bulb_Light = "6cbbc8ea04e98834d9vcpd"
+}
 
 /**
  * 因为数字转换失败，暂时只能通过map获取

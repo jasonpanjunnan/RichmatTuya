@@ -3,7 +3,7 @@ package com.richmat.mytuya.data.connectDevice
 import android.content.Context
 import android.util.Log
 import com.richmat.mytuya.ui.searchDevice.ConnectStep
-import com.richmat.mytuya.ui.searchDevice.DEVICE_SEARCH_FINISH
+import com.richmat.mytuya.ui.searchDevice.DeviceSearch.DEVICE_SEARCH_FINISH
 import com.richmat.mytuya.ui.searchDevice.SearchStep
 import com.richmat.mytuya.util.data.TAG
 import com.tuya.smart.home.sdk.TuyaHomeSdk
@@ -61,7 +61,7 @@ class ConnectRepository @Inject constructor() {
         wifiName: String,
         wifiPassword: String,
         timeOut: Long,
-        token: String
+        token: String,
     ): DeviceBean {
         return suspendCoroutine { continuation ->
             builder = ActivatorBuilder()

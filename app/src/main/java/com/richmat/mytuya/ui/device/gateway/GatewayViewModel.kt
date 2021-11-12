@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.richmat.mytuya.data.posts.Imp.FakePostsRepository
 import com.richmat.mytuya.data.repository.SearchRepository
-import com.richmat.mytuya.util.data.ZIGBEE_GATE
+import com.richmat.mytuya.util.data.DeviceId.ZIGBEE_GATE
 import com.tuya.smart.sdk.bean.DeviceBean
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

@@ -39,8 +39,8 @@ fun BulbLight(back: () -> Unit, setting: () -> Unit, viewModel: BulbLightViewMod
         back = back, setting = setting, powerOff = {}, offset = offset,
         changeOffset = { viewModel.changeOffset(it) },
         radian = radian,
-        changeRadian = {
-            viewModel.changeRadian(it)
+        changeRadian = { radion, percent ->
+            viewModel.changeRadian(radion,percent = percent)
         }
     )
 }
@@ -56,7 +56,7 @@ fun BulbLightScreen(
     offset: Offset,
     changeOffset: (Offset) -> Unit,
     radian: Double,
-    changeRadian: (Double) -> Unit,
+    changeRadian: (Double, Float) -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -119,7 +119,7 @@ fun DragGestureDemo(
     offset: Offset,
     changeOffset: (Offset) -> Unit,
     radian: Double,
-    changeRadian: (Double) -> Unit,
+    changeRadian: (Double, Float) -> Unit,
 ) {
     Box(contentAlignment = Center,
         modifier = Modifier
@@ -256,7 +256,7 @@ fun showLightPicker11() {
             powerOff = {},
             offset = Offset.Zero,
             changeOffset = {},
-            changeRadian = {},
+            changeRadian = {q,b ->},
             radian = 30.0,
         )
     }

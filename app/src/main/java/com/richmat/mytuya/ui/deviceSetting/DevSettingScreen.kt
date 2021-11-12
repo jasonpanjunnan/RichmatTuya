@@ -136,7 +136,7 @@ fun DrawLine(modifier: Modifier = Modifier) {
 fun ShowArc5() {
     JetsurveyTheme {
         DrawArc5(modifier = Modifier.size(260.dp), radian = 30.0,
-            ringWidth = 45f, ringStrokeWidth = 6f, changeRadian = {})
+            ringWidth = 45f, ringStrokeWidth = 6f, changeRadian = { d, a -> })
     }
 }
 
@@ -144,11 +144,10 @@ fun ShowArc5() {
 fun DrawArc5(
     modifier: Modifier = Modifier,
     radian: Double,
-    changeRadian: (Double) -> Unit,
+    changeRadian: (Double, Float) -> Unit,
     ringWidth: Float,
     ringStrokeWidth: Float,
 ) {
-    Log.e("TAG", "DrawArc5:, $radian")
     var offset by remember {
         mutableStateOf(Offset.Zero)
     }
@@ -186,8 +185,13 @@ fun DrawArc5(
                 } else {
                     offset = newOffset
                 }
-//                val radian = Math.toRadians(myAngle)
-                changeRadian(Math.toRadians(myAngle))
+                val myRadian = Math.toRadians(myAngle)
+                //获取x轴的长度除以直径，得到百分比.此方式不行，因为newoffset不是圆上的坐标
+//                val percent = ((newOffset.x - largeRadius) / (largeRadius * 2)).absoluteValue
+                //第二种，直接根据弧度求比例，不需要半径.牛逼卧槽，几年级，8年级的题，卧槽
+                val percent = ((cos(myRadian) - 1) / 2).absoluteValue
+
+                changeRadian(myRadian, percent.toFloat())
 //                val littleRingCenter = getOffsetByAngle(myAngle, largeRadius, Offset.Zero)
             }
             //TODO 需要监听手指抬起放下
