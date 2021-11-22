@@ -40,7 +40,10 @@ class AppModule {
             getUser = GetUser(repository),
             getUsers = GetUsers(repository),
             login = Login(repository),
-            insertUser = InsertUser(repository)
+            insertUser = InsertUser(repository),
+            forgetLogin = ForgetLogin(repository),
+            sendVerifyCode = SendVerifyCode(repository),
+            getCountries = GetCountries(repository)
         )
     }
 }

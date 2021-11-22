@@ -504,46 +504,4 @@ class FakePostsRepository @Inject constructor() : PostsRepository {
     fun getZigbeeGateList(): List<DeviceBean> {
         return deviceList.value.filter { it.isZigBeeWifi }
     }
-
-    suspend fun getCountries(): String {
-        return suspendCoroutine { continuation ->
-            //插值器，应该可以根据输入获取想要的数据
-            val postData: Map<String, Any>? = null
-
-            TuyaHomeSdk.getRequestInstance()
-                .requestWithApiNameWithoutSession("tuya.m.country.list", "1.0", postData,
-                    String::class.java, object : ITuyaDataCallback<String> {
-                        override fun onSuccess(result: String) {
-                            Log.i("TAG", result)
-                            continuation.resume(result)
-                        }
-
-                        override fun onError(errorCode: String, errorMessage: String) {
-                            Log.i("TAG", errorCode)
-                            continuation.resumeWithException(Exception(errorMessage))
-                        }
-                    })
-        }
-    }
-
-    suspend fun getCountries2(): String {
-        return suspendCoroutine { continuation ->
-            val postData: Map<String, Any>? = null
-
-
-            TuyaHomeSdk.getRequestInstance()
-                .requestWithApiName("tuya.m.country.list", "1.0", postData,
-                    String::class.java, object : ITuyaDataCallback<String> {
-                        override fun onSuccess(result: String) {
-                            Log.i("TAG", result)
-                            continuation.resume(result)
-                        }
-
-                        override fun onError(errorCode: String, errorMessage: String) {
-                            Log.i("TAG", errorCode)
-                            continuation.resumeWithException(Exception(errorMessage))
-                        }
-                    })
-        }
-    }
 }

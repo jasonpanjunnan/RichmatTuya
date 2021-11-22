@@ -132,27 +132,10 @@ fun Component(
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(350.dp)
+                                .height(150.dp)
                                 .background(Color.LightGray)
                         ) {
 //TODO 天气信息
-                            Column(modifier = Modifier.fillMaxWidth()) {
-                                Row(modifier = Modifier.fillMaxWidth(),
-                                    verticalAlignment = Alignment.CenterVertically) {
-                                    IconButton(onClick = { /*TODO*/ }) {
-                                        Icon(imageVector = Icons.Default.ArrowBack,
-                                            contentDescription = null)
-                                    }
-                                BasicTextField(value = "sss", onValueChange = {  })
-                                }
-                                LazyColumn {
-                                    items(countries) { country ->
-                                        Text(text = country, modifier = Modifier.fillMaxWidth())
-                                    }
-                                }
-                            }
-
-
                         }
                     }
                     TabSelect(

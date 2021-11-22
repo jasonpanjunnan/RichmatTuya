@@ -78,21 +78,6 @@ class HomeViewModel @Inject constructor(
                     _uiState.update { it.copy(deviceList = devices) }
                 }
             }
-
-            launch {
-                try {
-                    val countryJson = postsRepository.getCountries()
-                    val countryJson2 = postsRepository.getCountries2()
-                    val countries = JSONObject.parseArray(countryJson, CountryRespBean::class.java)
-                    _uiState.update {
-                        it.copy(countries = countries.map { countryRespBean ->
-                            countryRespBean.n
-                        })
-                    }
-                } catch (e: Exception) {
-                    println(e)
-                }
-            }
         }
 //        getHomeBean(_uiState.value.homeId)
     }

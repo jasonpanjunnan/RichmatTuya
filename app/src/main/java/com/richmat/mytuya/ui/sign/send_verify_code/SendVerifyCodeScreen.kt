@@ -1,5 +1,6 @@
-package com.richmat.mytuya.ui.sign
+package com.richmat.mytuya.ui.sign.send_verify_code
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -7,25 +8,20 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
-import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.richmat.mytuya.ui.newHome.Login
-import com.richmat.mytuya.ui.newHome.TabItem
 
 @Composable
-fun LoginScreen(
-    navigation: NavController,
-    viewModel: LoginViewModel = hiltViewModel(),
+fun SendVerifyCodeScreen(
+    navController: NavController,
+    viewModel: SendVerifyCodeViewModel = hiltViewModel(),
 ) {
     val phone = viewModel.phone.value
-    val password = viewModel.password.value
     val countryCode = viewModel.countryCode.value
 
     Scaffold(
@@ -33,7 +29,7 @@ fun LoginScreen(
             TopAppBar(navigationIcon = {
                 IconButton(
                     onClick = {
-                        navigation.navigateUp()
+                        navController.navigateUp()
                     }
                 ) {
                     Icon(
@@ -50,7 +46,7 @@ fun LoginScreen(
                 .padding(horizontal = 32.dp)
                 .padding(top = 40.dp)
         ) {
-            Text(text = "登录", style = MaterialTheme.typography.h6)
+            Text(text = "忘记密码", style = MaterialTheme.typography.h6)
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = { /*TODO*/ },
                 modifier = Modifier.fillMaxWidth(),
@@ -61,51 +57,28 @@ fun LoginScreen(
                 Icon(imageVector = Icons.Default.Menu, contentDescription = null,
                     modifier = Modifier
                         .weight(1f)
-                        .wrapContentWidth(End))
+                        .wrapContentWidth(Alignment.End))
             }
             Spacer(modifier = Modifier.height(16.dp))
             OutlinedTextField(value = phone,
                 textStyle = MaterialTheme.typography.body1,
                 modifier = Modifier.fillMaxWidth(),
                 onValueChange = {
-                    viewModel.onLoginEvent(LoginEvent.EnterPhone(it))
+                    viewModel.onEvent(SendVerifyCodeEvent.EnterPhone(it))
                 }, label = {
                     Text(text = "手机号")
                 })
-            Spacer(modifier = Modifier.height(16.dp))
-            OutlinedTextField(modifier = Modifier.fillMaxWidth(), value = password,
-                textStyle = MaterialTheme.typography.body1, onValueChange = {
-                    viewModel.onLoginEvent(LoginEvent.EnterPassword(it))
-                }, label = {
-                    Text(text = "密码")
-                })
             Spacer(modifier = Modifier.height(32.dp))
             Button(onClick = {
-                viewModel.onLoginEvent(LoginEvent.Login {
-                    navigation.navigate((TabItem.HomeTab.page.route)) {
-                        //清空顶上的回收栈
-                        navigation.popBackStack()
-                        popUpTo(navigation.graph.findStartDestination().id) {
-                            //此项可控制是否退出首项 StartDestination
-                            inclusive = true
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
+                viewModel.onEvent(SendVerifyCodeEvent.SendVerifyCodeWithUserName {
+                    Log.e("TAG", "SendVerifyCodeScreen: why 不跳")
+                    navController.navigate(Login.ForgetLoginScreen.route)
+//                    navController.navigate(Login.ForgetLoginScreen.route)
                 })
             },
                 modifier = Modifier.fillMaxWidth(),
-                enabled = phone.isNotBlank() && password.isNotBlank()) {
-                Text(text = "登录", style = MaterialTheme.typography.body1)
-            }
-            Spacer(modifier = Modifier.height(32.dp))
-            TextButton(onClick = {
-                navigation.navigate(Login.SendVerifyCodeScreen.route)
-            }, modifier = Modifier
-                .fillMaxWidth()
-                .align(CenterHorizontally)) {
-                Text(text = "忘记密码", style = MaterialTheme.typography.body1, color = Color.Blue)
+                enabled = phone.isNotBlank()) {
+                Text(text = "获取验证码", style = MaterialTheme.typography.body1)
             }
         }
     }

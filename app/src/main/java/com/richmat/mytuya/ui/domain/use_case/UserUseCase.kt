@@ -6,4 +6,6 @@ data class UserUseCase(
     val login: Login,
     val insertUser: InsertUser,
     val forgetLogin: ForgetLogin,
+    val sendVerifyCode: SendVerifyCode,
+    val getCountries: GetCountries,
 )

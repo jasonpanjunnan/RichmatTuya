@@ -35,6 +35,8 @@ sealed class DevicePage(val route: String) {
 
 sealed class Login(val route: String) {
     object LoginScreen : Login("login_screen")
+    object SendVerifyCodeScreen : Login("send_verifyCode_screen")
+    object ForgetLoginScreen : Login("forget_login_screen")
 }
 
 sealed class TabItem(val page: Page, @StringRes val resourceId: Int, val iconImage: ImageVector) {

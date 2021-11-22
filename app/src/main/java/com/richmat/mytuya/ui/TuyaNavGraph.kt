@@ -48,6 +48,8 @@ import com.richmat.mytuya.ui.searchResult.SearchResultScreen
 import com.richmat.mytuya.ui.searchResult.SearchResultViewModel
 import com.richmat.mytuya.ui.setting.SettingScreen
 import com.richmat.mytuya.ui.sign.*
+import com.richmat.mytuya.ui.sign.forget_password_login.ForgetLoginScreen
+import com.richmat.mytuya.ui.sign.send_verify_code.SendVerifyCodeScreen
 import kotlinx.coroutines.InternalCoroutinesApi
 
 //TODO 要把viewmodel提出来，使用uiStates传入。10.28 没必要，传状态不好找，再封一层即可
@@ -413,5 +415,55 @@ fun NavGraphBuilder.composableLoginScreen(navController: NavHostController) {
         LoginScreen(navigation = navController)
     }
 }
+
+@ExperimentalAnimationApi
+fun NavGraphBuilder.composableSendVerifyCodeScreen(navController: NavHostController) {
+    composable(route = Login.SendVerifyCodeScreen.route) {
+        SendVerifyCodeScreen(navController = navController)
+    }
+}
+
+@ExperimentalAnimationApi
+fun NavGraphBuilder.composableForgetLoginScreen(navController: NavHostController) {
+    composable(
+        route = Login.ForgetLoginScreen.route + "?countryCode={countryCode}&phone={phone}",
+        arguments = listOf(navArgument(name = "countryCode") {
+            type = NavType.StringType
+            defaultValue = "86"
+        }, navArgument(name = "phone") {
+            type = NavType.StringType
+            defaultValue = "13666666666"
+        })
+    ) { backStackEntry ->
+        ForgetLoginScreen(navController = navController, viewModel = hiltViewModel(backStackEntry))
+    }
+}
+
+//composable(
+//route = Screen.AddEditNoteScreen.route +
+//"?noteId={noteId}&noteColor={noteColor}",
+//arguments = listOf(
+//navArgument(
+//name = "noteId"
+//) {
+//    type = NavType.IntType
+//    defaultValue = -1
+//},
+//navArgument(
+//name = "noteColor"
+//) {
+//    type = NavType.IntType
+//    defaultValue = -1
+//},
+//)
+//) {
+//    val color = it.arguments?.getInt("noteColor") ?: -1
+//    AddEditNoteScreen(
+//        navController = navController,
+//        noteColor = color
+//    )
+//}
+
+//savedStateHandle.get<Int>("noteId")?.let { noteId ->
 
 

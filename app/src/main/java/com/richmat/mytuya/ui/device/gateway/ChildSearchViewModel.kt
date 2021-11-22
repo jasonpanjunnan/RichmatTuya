@@ -58,6 +58,7 @@ class ChildSearchViewModel @Inject constructor(
                 }
             } catch (e: Exception) {
                 println(e)
+                e.printStackTrace()
             }
         }
     }

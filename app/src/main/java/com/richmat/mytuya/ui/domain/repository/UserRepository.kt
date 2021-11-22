@@ -18,7 +18,7 @@ interface UserRepository {
         password: String, navigate: () -> Unit,
     )
 
-    suspend fun forgetLogin(countryCode: String, phone: String)
+    suspend fun forgetLogin(countryCode: String, phone: String, code: String):Boolean
 
     /**
      * 校验类型。取值：
@@ -34,7 +34,9 @@ interface UserRepository {
         phone: String,
         countryCode: String,
         type: Int,
-    )
+    ): Boolean
 
-    suspend fun checkRegionSupported()
+    suspend fun checkRegionSupported(): Boolean
+
+    suspend fun getCountries():String
 }

@@ -137,6 +137,8 @@ fun AnimationHomeNavHost(navController: NavHostController, startPage: Page) {
         composableDevSetting(navController)
         composableBulbLight(navController)
         composableLoginScreen(navController)
+        composableSendVerifyCodeScreen(navController)
+        composableForgetLoginScreen(navController)
     }
 }
 
