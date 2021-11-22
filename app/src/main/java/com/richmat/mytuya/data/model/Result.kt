@@ -1,4 +1,4 @@
-package com.richmat.mytuya.ui.newHome.homeViewmoel.viewmodel
+package com.richmat.mytuya.data.model
 
 
 sealed class Result<out R> {

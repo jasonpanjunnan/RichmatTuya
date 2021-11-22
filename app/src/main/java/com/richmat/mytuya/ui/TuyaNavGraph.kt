@@ -403,4 +403,15 @@ fun NavGraphBuilder.composableDevSetting(navController: NavHostController) {
     }
 }
 
+@ExperimentalAnimationApi
+fun NavGraphBuilder.composableLoginScreen(navController: NavHostController) {
+    composable(
+        route = Login.LoginScreen.route,
+//        "${Page.DevSetting.route}/{${DevSettingViewModel.DEV_INFO}}",
+//        arguments = listOf(navArgument(DevSettingViewModel.DEV_INFO) { type = NavType.StringType })
+    ) {
+        LoginScreen(navigation = navController)
+    }
+}
+
 

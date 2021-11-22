@@ -33,6 +33,10 @@ sealed class DevicePage(val route: String) {
     object BulbLight : DevicePage("bulbLight_devicePage")
 }
 
+sealed class Login(val route: String) {
+    object LoginScreen : Login("login_screen")
+}
+
 sealed class TabItem(val page: Page, @StringRes val resourceId: Int, val iconImage: ImageVector) {
     object HomeTab : TabItem(Page.Home, R.string.home, Icons.Rounded.Home)
     object SmartTab : TabItem(Page.Smart, R.string.smart, Icons.Rounded.LightMode)

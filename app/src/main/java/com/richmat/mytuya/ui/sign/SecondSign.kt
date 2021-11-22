@@ -63,11 +63,11 @@ fun SecondSignInScreen(navController: NavHostController) {
                                     password,
                                     object : ILoginCallback {
                                         override fun onSuccess(user: User) {
-                                            Toast.makeText(
-                                                MyApplication.context,
-                                                "Login success：" + TuyaHomeSdk.getUserInstance().user!!.username,
-                                                Toast.LENGTH_SHORT
-                                            ).show()
+//                                            Toast.makeText(
+//                                                MyApplication.context,
+//                                                "Login success：" + TuyaHomeSdk.getUserInstance().user!!.username,
+//                                                Toast.LENGTH_SHORT
+//                                            ).show()
 
                                             navController.navigate((TabItem.HomeTab.page.route)) {
                                                 //清空顶上的回收栈
@@ -83,11 +83,11 @@ fun SecondSignInScreen(navController: NavHostController) {
                                         }
 
                                         override fun onError(code: String, error: String) {
-                                            Toast.makeText(
-                                                MyApplication.context,
-                                                "code: " + code + "error: $error, /n 账号或密码错误，请重试",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
+//                                            Toast.makeText(
+//                                                MyApplication.context,
+//                                                "code: " + code + "error: $error, /n 账号或密码错误，请重试",
+//                                                Toast.LENGTH_SHORT
+//                                            ).show()
                                         }
                                     })
 

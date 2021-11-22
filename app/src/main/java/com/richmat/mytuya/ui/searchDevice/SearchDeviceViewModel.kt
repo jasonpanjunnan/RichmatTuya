@@ -93,7 +93,7 @@ class SearchDeviceViewModel @Inject constructor(
 
         _uiState.update { it.copy(searchState = searchs, homeId = homeId) }
         viewModelScope.launch {
-            //TODO 从这获取wifi名称
+            //从这获取wifi名称
             val wifiName = userPreferences.data.firstOrNull()?.wifiName
             val wifiPassword = userPreferences.data.firstOrNull()?.wifiPassword
 

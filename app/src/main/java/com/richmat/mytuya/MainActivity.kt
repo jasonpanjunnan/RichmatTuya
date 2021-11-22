@@ -1,6 +1,5 @@
 package com.richmat.mytuya
 
-//import com.example.compose.jetsurvey.signinsignup.WelcomeScreen
 import android.os.Build
 import android.os.Bundle
 import android.util.Log

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <plurals name="test0">
+        <item quantity="one">Test ok</item>
+        <item quantity="other">Tests ok</item>
+    </plurals>
+    <plurals name="test1">
+        <item quantity="one">%d test ok</item>
+        <item quantity="other">%d tests ok</item>
+    </plurals>
+    <plurals name="test2">
+        <item quantity="one">%2$s: %1$d test ok</item>
+        <item quantity="other">%2$s: %1$d tests ok</item>
+    </plurals>
+    <plurals name="test3">
+        <item quantity="one">%3$s: %1$d test out of %2$d ok</item>
+        <item quantity="other">%3$s: %1$d tests out of %2$d ok</item>
+    </plurals>
+</resources>

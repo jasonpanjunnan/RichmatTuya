@@ -76,7 +76,6 @@ fun SettingScreen(navController: NavHostController) {
                     }
                 }
             }
-
         }
     )
 }

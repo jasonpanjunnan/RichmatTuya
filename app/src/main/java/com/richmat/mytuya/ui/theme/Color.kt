@@ -23,6 +23,7 @@ val Purple600 = Color(0xFF9F00F4)
 val Purple700 = Color(0xFF8100EF)
 val Purple800 = Color(0xFF0000E1)
 val Write300 = Color(0xF7F8F8F7)
+val Red400 = Color(0xFFFF7043)
 
 val Red300 = Color(0xFFD00036)
 val Red800 = Color(0xFFEA6D7E)

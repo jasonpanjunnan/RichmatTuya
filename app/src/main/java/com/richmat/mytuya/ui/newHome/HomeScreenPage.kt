@@ -7,14 +7,16 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.*
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -31,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import coil.compose.rememberImagePainter
 import com.example.compose.jetsurvey.theme.JetsurveyTheme
 import com.example.compose.jetsurvey.theme.Red300
 import com.example.compose.jetsurvey.theme.Write300
@@ -84,7 +85,8 @@ fun HomeScreenPage(
                     route?.let { navController.navigate(it) }
                     //必选参数
 //                    route?.let { navController.navigate("$it/$homeId") }
-                }
+                },
+                countries = homeUiState.countries
             )
         }
     }
@@ -107,6 +109,7 @@ fun Component(
     dismissClick: () -> Unit,
     onRefreshDevList: () -> Unit,
     navigate: ((String, String) -> Unit)? = null,
+    countries: List<String>,
 ) {
     val homeBean = hostState.bean
     val isShowWarning = hostState.isShowHint
@@ -129,10 +132,27 @@ fun Component(
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(150.dp)
-                                .background(Color.Yellow)
+                                .height(350.dp)
+                                .background(Color.LightGray)
                         ) {
 //TODO 天气信息
+                            Column(modifier = Modifier.fillMaxWidth()) {
+                                Row(modifier = Modifier.fillMaxWidth(),
+                                    verticalAlignment = Alignment.CenterVertically) {
+                                    IconButton(onClick = { /*TODO*/ }) {
+                                        Icon(imageVector = Icons.Default.ArrowBack,
+                                            contentDescription = null)
+                                    }
+                                BasicTextField(value = "sss", onValueChange = {  })
+                                }
+                                LazyColumn {
+                                    items(countries) { country ->
+                                        Text(text = country, modifier = Modifier.fillMaxWidth())
+                                    }
+                                }
+                            }
+
+
                         }
                     }
                     TabSelect(

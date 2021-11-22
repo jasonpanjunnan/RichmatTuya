@@ -24,6 +24,9 @@ import com.example.compose.jetsurvey.theme.JetsurveyTheme
 import com.richmat.mytuya.R
 import com.richmat.mytuya.ui.deviceSetting.DrawArc5
 import com.richmat.mytuya.ui.deviceSurface.viewModel.BulbLightViewModel
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.math.asin
 import kotlin.math.cos
 import kotlin.math.hypot
@@ -33,14 +36,12 @@ import kotlin.math.sin
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
 fun BulbLight(back: () -> Unit, setting: () -> Unit, viewModel: BulbLightViewModel) {
-    val offset by viewModel.offsetState.collectAsState()
     val radian by viewModel.radianState.collectAsState()
     BulbLightScreen(
-        back = back, setting = setting, powerOff = {}, offset = offset,
-        changeOffset = { viewModel.changeOffset(it) },
+        back = back, setting = setting, powerOff = {},
         radian = radian,
         changeRadian = { radion, percent ->
-            viewModel.changeRadian(radion,percent = percent)
+            viewModel.changeRadian(radion, percent = percent)
         }
     )
 }
@@ -53,8 +54,6 @@ fun BulbLightScreen(
     deviceName: String = "",
     setting: () -> Unit,
     powerOff: () -> Unit,
-    offset: Offset,
-    changeOffset: (Offset) -> Unit,
     radian: Double,
     changeRadian: (Double, Float) -> Unit,
 ) {
@@ -99,7 +98,7 @@ fun BulbLightScreen(
     ) {
         Box(modifier = modifier, contentAlignment = Center) {
             Column {
-                DragGestureDemo(offset, changeOffset, radian = radian, changeRadian = changeRadian)
+                DragGestureDemo(radian = radian, changeRadian = changeRadian)
 //                LightPicker()
             }
         }
@@ -116,8 +115,6 @@ fun BulbLightScreen(
 //@Preview(o)
 @Composable
 fun DragGestureDemo(
-    offset: Offset,
-    changeOffset: (Offset) -> Unit,
     radian: Double,
     changeRadian: (Double, Float) -> Unit,
 ) {
@@ -127,15 +124,36 @@ fun DragGestureDemo(
             .fillMaxSize()
     ) {
 //        TODO这个估计用得上
+        //Start
 //        LaunchedEffect
-        LaunchedEffect(key1 = offset, block = {
-
-        })
-        DisposableEffect(key1 = 1, effect = {
-            onDispose {
-
-            }
-        })
+//        LaunchedEffect(key1 = true, block = {
+//            //这个玩意可以检测是否正常取消协程
+//            try {
+//                println("time start")
+//                delay(timeMillis = 5000L)
+//                println("time out")
+//            } catch (e: Exception) {
+//                println("time cancel")
+//            }
+//        })
+//        DisposableEffect(key1 = 1, effect = {
+//            onDispose {
+//
+//            }
+//        })
+//
+        //这个是配合副作用的，防止未用到时，重启launchedEffect，浪费或者未执行完全
+//        val scope1 = rememberUpdatedState(newValue = {})
+//
+//        val scope2 = rememberCoroutineScope()
+//        //可以取消
+//        val job = scope2.launch { }
+//
+//        //这种取消会关闭空间，所有的都会关闭
+//        scope2.cancel()
+//        //这种会一个一个的关闭
+//        job.cancel()
+        //End
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Box(modifier = Modifier.size(300.dp), contentAlignment = Center) {
                 DrawArc5(radian = radian,
@@ -254,9 +272,7 @@ fun showLightPicker11() {
             back = {},
             setting = {},
             powerOff = {},
-            offset = Offset.Zero,
-            changeOffset = {},
-            changeRadian = {q,b ->},
+            changeRadian = { q, b -> },
             radian = 30.0,
         )
     }

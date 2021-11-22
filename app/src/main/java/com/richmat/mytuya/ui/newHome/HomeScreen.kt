@@ -136,6 +136,7 @@ fun AnimationHomeNavHost(navController: NavHostController, startPage: Page) {
         composableSearchResultScreen(navController)
         composableDevSetting(navController)
         composableBulbLight(navController)
+        composableLoginScreen(navController)
     }
 }
 

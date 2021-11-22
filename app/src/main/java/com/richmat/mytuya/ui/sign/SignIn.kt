@@ -15,6 +15,7 @@ import androidx.navigation.NavHostController
 import com.example.compose.jetsurvey.theme.Orange800
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.richmat.mytuya.R
+import com.richmat.mytuya.ui.newHome.Login
 import com.richmat.mytuya.ui.newHome.Page
 import com.richmat.mytuya.util.supportWideScreen
 
@@ -48,7 +49,8 @@ fun SignInAndCreateAccount(modifier: Modifier = Modifier, navController: NavHost
         LongButton(
             "登录",
             onSubmit = {
-                navController.navigate(Page.Login.route) {
+                navController.navigate(Login.LoginScreen.route) {
+//                navController.navigate(Page.Login.route) {
                     //TODO 可以处理一些栈信息,下面同理
                 }
             },
