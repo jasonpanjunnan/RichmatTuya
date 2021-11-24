@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.richmat.mytuya.ui.domain.model.User
 import com.richmat.mytuya.ui.domain.use_case.UserUseCase
+import com.richmat.mytuya.util.default
+import com.tuya.smart.android.base.bean.CountryRespBean
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
@@ -25,8 +27,11 @@ class LoginViewModel @Inject constructor(
     private val _password = mutableStateOf("")
     val password: State<String> = _password
 
-    private val _countryCode = mutableStateOf("86")
-    val countryCode: State<String> = _countryCode
+    val currentCountry = userUseCase.observeCountry().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = CountryRespBean().default()
+    )
 
     private var getUserJob: Job? = null
 
@@ -52,14 +57,12 @@ class LoginViewModel @Inject constructor(
         when (event) {
             is LoginEvent.Login -> {
                 viewModelScope.launch {
-                    userUseCase.login(_countryCode.value,
-                        _phone.value,
-                        _password.value,
+                    userUseCase.login(
+                        event.countryCode,
+                        event.phone,
+                        event.password,
                         event.navigate)
                 }
-            }
-            is LoginEvent.EnterCountryCode -> {
-                _countryCode.value = event.countryCode
             }
             is LoginEvent.EnterPassword -> {
                 _password.value = event.password

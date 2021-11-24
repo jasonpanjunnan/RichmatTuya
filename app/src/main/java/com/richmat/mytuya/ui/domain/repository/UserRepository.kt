@@ -1,6 +1,7 @@
 package com.richmat.mytuya.ui.domain.repository
 
 import com.richmat.mytuya.ui.domain.model.User
+import com.tuya.smart.android.base.bean.CountryRespBean
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
@@ -18,7 +19,7 @@ interface UserRepository {
         password: String, navigate: () -> Unit,
     )
 
-    suspend fun forgetLogin(countryCode: String, phone: String, code: String):Boolean
+    suspend fun forgetLogin(countryCode: String, phone: String, code: String): Boolean
 
     /**
      * 校验类型。取值：
@@ -38,5 +39,9 @@ interface UserRepository {
 
     suspend fun checkRegionSupported(): Boolean
 
-    suspend fun getCountries():String
+    suspend fun getCountries(): String
+
+    suspend fun selectedCurrentCountry(country: CountryRespBean)
+
+    fun observeCountry(): Flow<CountryRespBean>
 }

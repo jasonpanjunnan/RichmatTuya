@@ -14,7 +14,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.TaskAlt
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.End
@@ -28,11 +31,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.alibaba.fastjson.JSON
 import com.example.compose.jetsurvey.theme.JetsurveyTheme
 import com.example.compose.jetsurvey.theme.Red300
 import com.example.compose.jetsurvey.theme.Red800
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.richmat.mytuya.MyApplication
 import com.richmat.mytuya.R
 import com.richmat.mytuya.ui.components.FullScreenLoading
@@ -402,7 +405,7 @@ private fun AddDevice(
 @Preview
 @Composable
 fun Show() {
-    SearchDeviceScreen(rememberAnimatedNavController(), viewModel())
+    SearchDeviceScreen(rememberNavController(), viewModel())
 }
 
 @Preview

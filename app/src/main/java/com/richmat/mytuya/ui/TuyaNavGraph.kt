@@ -1,7 +1,6 @@
 package com.richmat.mytuya.ui
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -15,15 +14,13 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import com.example.compose.jetsurvey.theme.JetsurveyTheme
-import com.google.accompanist.navigation.animation.composable
-import com.richmat.mytuya.data.repository.impl.SearchDeviceRepository
 import com.richmat.mytuya.mNeedBackGesture
 import com.richmat.mytuya.ui.device.gateway.ChildSearchViewModel
 import com.richmat.mytuya.ui.device.gateway.ChildSearchViewModel.Companion.SEARCH_CHILD_KEY
@@ -48,6 +45,7 @@ import com.richmat.mytuya.ui.searchResult.SearchResultScreen
 import com.richmat.mytuya.ui.searchResult.SearchResultViewModel
 import com.richmat.mytuya.ui.setting.SettingScreen
 import com.richmat.mytuya.ui.sign.*
+import com.richmat.mytuya.ui.sign.compoments.SelectCountryScreen
 import com.richmat.mytuya.ui.sign.forget_password_login.ForgetLoginScreen
 import com.richmat.mytuya.ui.sign.send_verify_code.SendVerifyCodeScreen
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -89,29 +87,29 @@ fun NavGraphBuilder.composableMyself(navController: NavHostController) {
 //                defaultValue = "1.23"
 //            }
 //        ),
-        exitTransition = { _, target ->
-            when (target.destination.route) {
-                Page.Smart.route, Page.Home.route ->
-                    slideOutOfContainer(
-                        towards = AnimatedContentScope.SlideDirection.Right,
-                        targetOffset = { offset },
-                        animationSpec = tween(duration)
-                    ) + fadeOut(animationSpec = tween(duration))
-                else -> null
-            }
-        },
-        enterTransition = { initial, _ ->
-            when (initial.destination.route) {
-                Page.Smart.route, Page.Home.route -> {
-                    slideIntoContainer(
-                        towards = AnimatedContentScope.SlideDirection.Right,
-                        initialOffset = { offset },
-                        animationSpec = tween(duration)
-                    ) + fadeIn(animationSpec = tween(duration))
-                }
-                else -> null
-            }
-        },
+//        exitTransition = { _, target ->
+//            when (target.destination.route) {
+//                Page.Smart.route, Page.Home.route ->
+//                    slideOutOfContainer(
+//                        towards = AnimatedContentScope.SlideDirection.Right,
+//                        targetOffset = { offset },
+//                        animationSpec = tween(duration)
+//                    ) + fadeOut(animationSpec = tween(duration))
+//                else -> null
+//            }
+//        },
+//        enterTransition = { initial, _ ->
+//            when (initial.destination.route) {
+//                Page.Smart.route, Page.Home.route -> {
+//                    slideIntoContainer(
+//                        towards = AnimatedContentScope.SlideDirection.Right,
+//                        initialOffset = { offset },
+//                        animationSpec = tween(duration)
+//                    ) + fadeIn(animationSpec = tween(duration))
+//                }
+//                else -> null
+//            }
+//        },
 //        popEnterTransition = { initial, _ ->
 //            when (initial.destination.route) {
 //                Page.Smart.route , Page.Home.route-> {
@@ -135,42 +133,43 @@ fun NavGraphBuilder.composableMyself(navController: NavHostController) {
 fun NavGraphBuilder.composableSmart(navController: NavHostController) {
     composable(
         Page.Smart.route,
-        exitTransition = { _, target ->
-            when (target.destination.route) {
-                Page.Myself.route ->
-                    slideOutOfContainer(
-                        towards = AnimatedContentScope.SlideDirection.Right,
-                        targetOffset = { -offset },
-                        animationSpec = tween(duration)
-                    ) + fadeOut(animationSpec = tween(duration))
-                Page.Home.route ->
-                    slideOutOfContainer(
-                        towards = AnimatedContentScope.SlideDirection.Right,
-                        targetOffset = { offset },
-                        animationSpec = tween(duration)
-                    ) + fadeOut(animationSpec = tween(duration))
-                else -> null
-            }
-        },
-        enterTransition = { initial, _ ->
-            when (initial.destination.route) {
-                Page.Myself.route -> {
-                    slideIntoContainer(
-                        towards = AnimatedContentScope.SlideDirection.Right,
-                        initialOffset = { -offset },
-                        animationSpec = tween(duration)
-                    ) + fadeIn(animationSpec = tween(duration))
-                }
-                Page.Home.route -> {
-                    slideIntoContainer(
-                        towards = AnimatedContentScope.SlideDirection.Right,
-                        initialOffset = { offset },
-                        animationSpec = tween(duration)
-                    ) + fadeIn(animationSpec = tween(duration))
-                }
-                else -> null
-            }
-        }) {
+//        exitTransition = { _, target ->
+//            when (target.destination.route) {
+//                Page.Myself.route ->
+//                    slideOutOfContainer(
+//                        towards = AnimatedContentScope.SlideDirection.Right,
+//                        targetOffset = { -offset },
+//                        animationSpec = tween(duration)
+//                    ) + fadeOut(animationSpec = tween(duration))
+//                Page.Home.route ->
+//                    slideOutOfContainer(
+//                        towards = AnimatedContentScope.SlideDirection.Right,
+//                        targetOffset = { offset },
+//                        animationSpec = tween(duration)
+//                    ) + fadeOut(animationSpec = tween(duration))
+//                else -> null
+//            }
+//        },
+//        enterTransition = { initial, _ ->
+//            when (initial.destination.route) {
+//                Page.Myself.route -> {
+//                    slideIntoContainer(
+//                        towards = AnimatedContentScope.SlideDirection.Right,
+//                        initialOffset = { -offset },
+//                        animationSpec = tween(duration)
+//                    ) + fadeIn(animationSpec = tween(duration))
+//                }
+//                Page.Home.route -> {
+//                    slideIntoContainer(
+//                        towards = AnimatedContentScope.SlideDirection.Right,
+//                        initialOffset = { offset },
+//                        animationSpec = tween(duration)
+//                    ) + fadeIn(animationSpec = tween(duration))
+//                }
+//                else -> null
+//            }
+//        }
+    ) {
         SmartScreenPage(navController)
     }
 }
@@ -183,29 +182,30 @@ fun NavGraphBuilder.composableSmart(navController: NavHostController) {
 fun NavGraphBuilder.composableHome(navController: NavHostController) {
     composable(
         Page.Home.route,
-        exitTransition = { _, target ->
-            when (target.destination.route) {
-                Page.Smart.route, Page.Myself.route ->
-                    slideOutOfContainer(
-                        towards = AnimatedContentScope.SlideDirection.Left,
-                        targetOffset = { -offset },
-                        animationSpec = tween(duration)
-                    ) + fadeOut(animationSpec = tween(duration))
-                else -> null
-            }
-        },
-        enterTransition = { initial, _ ->
-            when (initial.destination.route) {
-                Page.Smart.route, Page.Myself.route -> {
-                    slideIntoContainer(
-                        towards = AnimatedContentScope.SlideDirection.Left,
-                        initialOffset = { -offset },
-                        animationSpec = tween(duration)
-                    ) + fadeIn(animationSpec = tween(duration))
-                }
-                else -> null
-            }
-        }) { backStackEntry ->
+//        exitTransition = { _, target ->
+//            when (target.destination.route) {
+//                Page.Smart.route, Page.Myself.route ->
+//                    slideOutOfContainer(
+//                        towards = AnimatedContentScope.SlideDirection.Left,
+//                        targetOffset = { -offset },
+//                        animationSpec = tween(duration)
+//                    ) + fadeOut(animationSpec = tween(duration))
+//                else -> null
+//            }
+//        },
+//        enterTransition = { initial, _ ->
+//            when (initial.destination.route) {
+//                Page.Smart.route, Page.Myself.route -> {
+//                    slideIntoContainer(
+//                        towards = AnimatedContentScope.SlideDirection.Left,
+//                        initialOffset = { -offset },
+//                        animationSpec = tween(duration)
+//                    ) + fadeIn(animationSpec = tween(duration))
+//                }
+//                else -> null
+//            }
+//        }
+    ) { backStackEntry ->
         //检测网络状态
         val context = LocalContext.current
         var isOnline by remember { mutableStateOf(checkIfOnline(context)) }
@@ -426,6 +426,7 @@ fun NavGraphBuilder.composableSendVerifyCodeScreen(navController: NavHostControl
 @ExperimentalAnimationApi
 fun NavGraphBuilder.composableForgetLoginScreen(navController: NavHostController) {
     composable(
+        //必须要的可以使用“//”,可选的最好加判断
         route = Login.ForgetLoginScreen.route + "?countryCode={countryCode}&phone={phone}",
         arguments = listOf(navArgument(name = "countryCode") {
             type = NavType.StringType
@@ -436,6 +437,13 @@ fun NavGraphBuilder.composableForgetLoginScreen(navController: NavHostController
         })
     ) { backStackEntry ->
         ForgetLoginScreen(navController = navController, viewModel = hiltViewModel(backStackEntry))
+    }
+}
+
+@ExperimentalAnimationApi
+fun NavGraphBuilder.composableSelectCountryScreen(navController: NavHostController) {
+    composable(route = Login.SelectCountryScreen.route) {
+        SelectCountryScreen(navController = navController)
     }
 }
 
@@ -465,5 +473,3 @@ fun NavGraphBuilder.composableForgetLoginScreen(navController: NavHostController
 //}
 
 //savedStateHandle.get<Int>("noteId")?.let { noteId ->
-
-

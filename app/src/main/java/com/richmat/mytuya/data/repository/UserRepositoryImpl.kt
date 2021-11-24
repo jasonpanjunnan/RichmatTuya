@@ -6,6 +6,8 @@ import com.richmat.mytuya.MyApplication
 import com.richmat.mytuya.data.data_source.UserDao
 import com.richmat.mytuya.ui.domain.model.User
 import com.richmat.mytuya.ui.domain.repository.UserRepository
+import com.richmat.mytuya.util.default
+import com.tuya.smart.android.base.bean.CountryRespBean
 import com.tuya.smart.android.user.api.ILoginCallback
 import com.tuya.smart.android.user.api.IWhiteListCallback
 import com.tuya.smart.android.user.bean.WhiteList
@@ -13,6 +15,9 @@ import com.tuya.smart.home.sdk.TuyaHomeSdk
 import com.tuya.smart.sdk.api.IResultCallback
 import com.tuya.smart.sdk.api.ITuyaDataCallback
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -21,6 +26,12 @@ import kotlin.coroutines.suspendCoroutine
 class UserRepositoryImpl(
     private val dao: UserDao,
 ) : UserRepository {
+    // for now, keep the selections in memory
+    private val currentCountry = MutableStateFlow(CountryRespBean().default())
+
+    // Used to make suspend functions that read and update state safe to call from any thread
+    private val mutex = Mutex()
+
     override fun getUsers(): Flow<List<User>> {
         return dao.getUsers()
     }
@@ -82,7 +93,6 @@ class UserRepositoryImpl(
                     }
                 })
         }
-
     }
 
     override suspend fun sendVerifyCodeWithUserName(
@@ -107,7 +117,6 @@ class UserRepositoryImpl(
                     }
                 })
         }
-
     }
 
     override suspend fun checkRegionSupported(): Boolean {
@@ -149,4 +158,14 @@ class UserRepositoryImpl(
                     })
         }
     }
+
+    override suspend fun selectedCurrentCountry(country: CountryRespBean) {
+        mutex.withLock {
+            currentCountry.value = country
+            Log.e("TAG",
+                "selectedCurrentCountry: ${currentCountry.value},${currentCountry.value.n}")
+        }
+    }
+
+    override fun observeCountry(): Flow<CountryRespBean> = currentCountry
 }

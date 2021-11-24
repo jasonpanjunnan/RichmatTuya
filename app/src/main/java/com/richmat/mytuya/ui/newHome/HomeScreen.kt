@@ -2,7 +2,6 @@ package com.richmat.mytuya.ui.newHome
 
 import android.os.Build
 import android.util.Log
-import androidx.activity.OnBackPressedDispatcher
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -15,15 +14,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import androidx.navigation.compose.rememberNavController
+import com.richmat.mytuya.data.posts.Imp.FakePostsRepository
 import com.richmat.mytuya.ui.*
 import com.richmat.mytuya.ui.newHome.homeViewmoel.dialogViewModel.DialogViewModel
-import com.richmat.mytuya.data.posts.Imp.FakePostsRepository
 import com.richmat.mytuya.util.data.TAG
 import com.tuya.smart.sdk.bean.DeviceBean
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import java.time.LocalDateTime
@@ -43,7 +45,8 @@ fun HomeScreen(
     startPage: Page,
     viewModel: DialogViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
 ) {
-    val navController = rememberAnimatedNavController()
+//    val navController = rememberAnimatedNavController()
+    val navController = rememberNavController()
     val tableItems = listOf(TabItem.HomeTab, TabItem.SmartTab, TabItem.MyselfTab)
     val isShow by viewModel.isShowWarning.collectAsState()
     val globalDialog1 =
@@ -117,7 +120,8 @@ fun HomeScreen(
 @ExperimentalAnimationApi
 @Composable
 fun AnimationHomeNavHost(navController: NavHostController, startPage: Page) {
-    AnimatedNavHost(navController = navController, startDestination = startPage.route) {
+    NavHost(navController = navController, startDestination = startPage.route) {
+//    AnimatedNavHost(navController = navController, startDestination = startPage.route) {
         composableHome(navController)
         composableSmart(navController)
         composableMyself(navController)
@@ -139,6 +143,7 @@ fun AnimationHomeNavHost(navController: NavHostController, startPage: Page) {
         composableLoginScreen(navController)
         composableSendVerifyCodeScreen(navController)
         composableForgetLoginScreen(navController)
+        composableSelectCountryScreen(navController)
     }
 }
 

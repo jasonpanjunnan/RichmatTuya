@@ -5,7 +5,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.richmat.mytuya.ui.domain.use_case.UserUseCase
+import com.richmat.mytuya.util.default
+import com.tuya.smart.android.base.bean.CountryRespBean
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,8 +20,11 @@ class SendVerifyCodeViewModel @Inject constructor(
     private val _phone = mutableStateOf("")
     val phone: State<String> = _phone
 
-    private val _countryCode = mutableStateOf("86")
-    val countryCode: State<String> = _countryCode
+    val currentCountry = userUseCase.observeCountry().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = CountryRespBean().default()
+    )
 
     fun onEvent(event: SendVerifyCodeEvent) {
         when (event) {
@@ -26,14 +33,15 @@ class SendVerifyCodeViewModel @Inject constructor(
             }
             is SendVerifyCodeEvent.SendVerifyCodeWithUserName -> {
                 viewModelScope.launch {
-                    val isSend = userUseCase.sendVerifyCode("", phone.value, countryCode.value, 2)
+                    val isSend = userUseCase.sendVerifyCode(
+                        event.region,
+                        event.phone,
+                        event.countryCode,
+                        event.type)
                     if (isSend) {
                         event.navigate()
                     }
                 }
-            }
-            is SendVerifyCodeEvent.EnterCountryCode -> {
-                _countryCode.value = event.countryCode
             }
         }
     }

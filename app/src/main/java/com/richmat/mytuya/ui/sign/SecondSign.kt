@@ -1,6 +1,5 @@
 package com.richmat.mytuya.ui.sign
 
-import android.widget.Toast
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -16,14 +15,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.compose.jetsurvey.signinsignup.PasswordState
+import com.example.compose.jetsurvey.theme.JetsurveyTheme
+import com.richmat.mytuya.R
 import com.richmat.mytuya.ui.components.Email
 import com.richmat.mytuya.ui.components.Password
-import com.example.compose.jetsurvey.signinsignup.PasswordState
 import com.richmat.mytuya.ui.components.SignInSignUpScreen
-import com.example.compose.jetsurvey.theme.JetsurveyTheme
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.richmat.mytuya.MyApplication
-import com.richmat.mytuya.R
 import com.richmat.mytuya.ui.components.SignInSignUpTopAppBar
 import com.richmat.mytuya.ui.newHome.TabItem
 import com.richmat.mytuya.ui.sign.textFieldState.PhoneState
@@ -162,6 +160,6 @@ fun SignInContent(
 @Composable
 fun showSignUpScreen() {
     JetsurveyTheme {
-        SecondSignInScreen(navController = rememberAnimatedNavController())
+        SecondSignInScreen(navController = rememberNavController())
     }
 }

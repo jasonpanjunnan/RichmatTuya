@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.richmat.mytuya.ui.components.SignInSignUpTopAppBar
 import com.example.compose.jetsurvey.theme.Red800
@@ -46,18 +47,17 @@ fun SettingScreen(navController: NavHostController) {
                                         Toast.LENGTH_SHORT
                                     ).show()
                                     //退出登录成功
-
                                     navController.navigate(Page.SignIn.route) {
                                         //TODO ????? 为啥要执行两次才行
 //                                        navController.popBackStack(Page.SignIn.route,true)
-                                        navController.navigateUp()
-                                        navController.popBackStack()
+//                                        navController.navigateUp()
+//                                        navController.popBackStack()
                                         //暂时无用
-//                                        popUpTo(navController.graph.findStartDestination().id) {
+                                        popUpTo(navController.graph.findStartDestination().id) {
 //                                            //此项可控制是否退出首项 StartDestination
 //                                            inclusive = true
 //                                            saveState = true
-//                                        }
+                                        }
                                         launchSingleTop = true
                                         restoreState = true
                                     }

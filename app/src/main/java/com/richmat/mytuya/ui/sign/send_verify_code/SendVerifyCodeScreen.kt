@@ -7,6 +7,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,6 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.richmat.mytuya.ui.newHome.Login
+import com.richmat.mytuya.util.getCountryCode
+import com.richmat.mytuya.util.getCountryName
 
 @Composable
 fun SendVerifyCodeScreen(
@@ -22,7 +26,7 @@ fun SendVerifyCodeScreen(
     viewModel: SendVerifyCodeViewModel = hiltViewModel(),
 ) {
     val phone = viewModel.phone.value
-    val countryCode = viewModel.countryCode.value
+    val country by viewModel.currentCountry.collectAsState()
 
     Scaffold(
         topBar = {
@@ -48,10 +52,13 @@ fun SendVerifyCodeScreen(
         ) {
             Text(text = "忘记密码", style = MaterialTheme.typography.h6)
             Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = { /*TODO*/ },
+            Button(onClick = {
+                navController.navigate(Login.SelectCountryScreen.route)
+
+            },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)) {
-                Text(text = "中国",
+                Text(text = country.getCountryName(),
                     textAlign = TextAlign.Start,
                     style = MaterialTheme.typography.body1)
                 Icon(imageVector = Icons.Default.Menu, contentDescription = null,
@@ -70,10 +77,16 @@ fun SendVerifyCodeScreen(
                 })
             Spacer(modifier = Modifier.height(32.dp))
             Button(onClick = {
-                viewModel.onEvent(SendVerifyCodeEvent.SendVerifyCodeWithUserName {
-                    Log.e("TAG", "SendVerifyCodeScreen: why 不跳")
-                    navController.navigate(Login.ForgetLoginScreen.route)
-//                    navController.navigate(Login.ForgetLoginScreen.route)
+                viewModel.onEvent(SendVerifyCodeEvent.SendVerifyCodeWithUserName(
+                    "",
+                    phone,
+                    country.getCountryCode(),
+                    2
+                ) {
+                    navController.navigate(
+                        Login.ForgetLoginScreen.route +
+                                "?countryCode=${country.getCountryCode()}&phone=${phone}"
+                    )
                 })
             },
                 modifier = Modifier.fillMaxWidth(),

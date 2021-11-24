@@ -43,7 +43,9 @@ class AppModule {
             insertUser = InsertUser(repository),
             forgetLogin = ForgetLogin(repository),
             sendVerifyCode = SendVerifyCode(repository),
-            getCountries = GetCountries(repository)
+            getCountries = GetCountries(repository),
+            observeCountry = ObserveCountry(repository),
+            selectedCurrentCountry = SelectedCurrentCountry(repository)
         )
     }
 }

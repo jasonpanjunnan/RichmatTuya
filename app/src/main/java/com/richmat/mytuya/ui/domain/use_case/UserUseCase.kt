@@ -8,4 +8,6 @@ data class UserUseCase(
     val forgetLogin: ForgetLogin,
     val sendVerifyCode: SendVerifyCode,
     val getCountries: GetCountries,
+    val observeCountry: ObserveCountry,
+    val selectedCurrentCountry:SelectedCurrentCountry
 )

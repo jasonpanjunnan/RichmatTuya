@@ -11,9 +11,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.compose.jetsurvey.theme.Orange800
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.richmat.mytuya.R
 import com.richmat.mytuya.ui.newHome.Login
 import com.richmat.mytuya.ui.newHome.Page
@@ -21,7 +22,10 @@ import com.richmat.mytuya.util.supportWideScreen
 
 @Composable
 fun SignInScreen(navController: NavHostController) {
-    Surface(modifier = Modifier.supportWideScreen()) {
+    Surface(modifier = Modifier.fillMaxSize()) {
+//        Image(painter = painterResource(id = R.drawable.starry_sky),
+//            contentDescription = null,
+//            modifier = Modifier.fillMaxSize(),)
         Column() {
             Branding(
                 Modifier
@@ -33,7 +37,7 @@ fun SignInScreen(navController: NavHostController) {
             SignInAndCreateAccount(
                 modifier = Modifier
                     .supportWideScreen()
-                    .padding(20.dp),
+                    .padding(40.dp),
                 navController
             )
         }
@@ -57,7 +61,7 @@ fun SignInAndCreateAccount(modifier: Modifier = Modifier, navController: NavHost
             color = ButtonDefaults.buttonColors(
                 backgroundColor = Orange800
             ),
-            modifier = modifier
+            modifier = Modifier
         )
         Spacer(modifier = Modifier.height(20.dp))
         LongButton("注册", onSubmit = {
@@ -77,7 +81,7 @@ fun Branding(modifier: Modifier = Modifier) {
     Image(
         painter = painterResource(R.mipmap.ic_launcher),
         contentDescription = null,
-        modifier = modifier
+        modifier = modifier.size(145.dp)
     )
 }
 
@@ -86,15 +90,18 @@ fun LongButton(
     str: String,
     modifier: Modifier = Modifier,
     onSubmit: () -> Unit,
-    color: ButtonColors = ButtonDefaults.buttonColors()
+    color: ButtonColors = ButtonDefaults.buttonColors(),
 ) {
     Button(
         onClick = onSubmit,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 32.dp)
+            .height(48.dp),
 //        modifier = modifier,
         colors = color
     ) {
-        Text(text = str, style = MaterialTheme.typography.subtitle2)
+        Text(text = str, style = MaterialTheme.typography.subtitle2, fontSize = 17.sp)
     }
 }
 
@@ -102,5 +109,5 @@ fun LongButton(
 @Preview
 @Composable
 fun ShowScreen() {
-    SignInScreen(navController = rememberAnimatedNavController())
+    SignInScreen(navController = rememberNavController())
 }

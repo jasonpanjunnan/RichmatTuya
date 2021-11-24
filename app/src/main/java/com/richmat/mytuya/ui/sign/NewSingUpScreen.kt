@@ -14,12 +14,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.compose.jetsurvey.theme.JetsurveyTheme
+import com.richmat.mytuya.R
 import com.richmat.mytuya.ui.components.Email
 import com.richmat.mytuya.ui.components.SignInSignUpScreen
 import com.richmat.mytuya.ui.components.SignInSignUpTopAppBar
-import com.example.compose.jetsurvey.theme.JetsurveyTheme
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.richmat.mytuya.R
 import com.richmat.mytuya.ui.newHome.Page
 import com.richmat.mytuya.ui.sign.textFieldState.PhoneState
 import com.richmat.mytuya.util.supportWideScreen
@@ -86,5 +86,5 @@ fun NewSignInContent(
 @Preview
 @Composable
 fun showScreen() {
-    NewSignUpScreen(rememberAnimatedNavController())
+    NewSignUpScreen(rememberNavController())
 }

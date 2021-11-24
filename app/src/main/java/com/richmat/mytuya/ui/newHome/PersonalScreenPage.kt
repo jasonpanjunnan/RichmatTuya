@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import androidx.navigation.compose.rememberNavController
 
 @ExperimentalFoundationApi
 @Composable
@@ -27,5 +27,5 @@ fun PersonalScreenPage(navController: NavHostController) {
 @Preview
 @Composable
 fun showHome() {
-    PersonalScreenPage(rememberAnimatedNavController())
+    PersonalScreenPage(rememberNavController())
 }

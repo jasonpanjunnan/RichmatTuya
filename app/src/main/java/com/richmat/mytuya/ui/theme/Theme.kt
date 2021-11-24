@@ -27,7 +27,8 @@ import androidx.compose.ui.graphics.Color
 val LightThemeColors = lightColors(
     primary = Red400,
 //    primary = Purple700,
-    primaryVariant = Purple800,
+//    primaryVariant = Purple800,
+    primaryVariant = Color.White,
 //    onPrimary = Color.White,
     onPrimary = Color.Black,
     secondary = Color.White,
