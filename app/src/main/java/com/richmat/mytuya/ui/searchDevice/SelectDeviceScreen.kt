@@ -17,18 +17,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.example.compose.jetsurvey.theme.JetsurveyTheme
+import com.richmat.mytuya.ui.theme.JetsurveyTheme
 import com.example.compose.jetsurvey.theme.Red300
 import com.example.compose.jetsurvey.theme.Red800
 import com.example.compose.jetsurvey.theme.Write300
 import com.richmat.mytuya.R
 import com.richmat.mytuya.ui.components.SignInSignUpTopAppBar
 import com.richmat.mytuya.ui.newHome.Page
-import com.richmat.mytuya.util.data.DevResultMassage
 import com.tuya.smart.sdk.bean.DeviceBean
 
 @ExperimentalFoundationApi

@@ -45,7 +45,9 @@ class AppModule {
             sendVerifyCode = SendVerifyCode(repository),
             getCountries = GetCountries(repository),
             observeCountry = ObserveCountry(repository),
-            selectedCurrentCountry = SelectedCurrentCountry(repository)
+            selectedCurrentCountry = SelectedCurrentCountry(repository),
+            register = Register(repository),
+            touristRegisterAndLogin = TouristRegisterAndLogin(repository)
         )
     }
 }

@@ -11,7 +11,6 @@ class MyApplication : Application() {
     companion object {
         @SuppressLint("StaticFieldLeak")
         lateinit var context: Context
-
     }
 
     override fun onCreate() {

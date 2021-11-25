@@ -15,7 +15,6 @@ import androidx.compose.material.icons.outlined.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
@@ -27,6 +26,8 @@ import com.google.accompanist.insets.statusBarsPadding
 import com.richmat.mytuya.R
 import com.richmat.mytuya.util.getCountryName
 import com.tuya.smart.android.base.bean.CountryRespBean
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @Composable
 fun SearchCountry(
@@ -34,6 +35,7 @@ fun SearchCountry(
     search: (String) -> List<CountryRespBean>,
     itemClick: (CountryRespBean) -> Unit,
     state: CountrySearchState = rememberCountrySearchState(),
+    categories: @Composable () -> Unit,
 ) {
     Column(modifier = modifier) {
         Spacer(modifier = Modifier
@@ -47,15 +49,20 @@ fun SearchCountry(
             onClearQuery = { state.query = TextFieldValue("") },
             searching = state.searching
         )
-        Log.e("TAG", "SearchCountry: ${state.query.text}", )
+        Log.e("TAG", "SearchCountry: ${state.query.text}")
         Divider()
+        //TODO 会闪一下，太灵敏了，状态被重置了一次，应该是
         LaunchedEffect(key1 = state.query.text) {
             state.searching = true
-            state.searchResults = search(state.query.text)
+//            state.searchResults = search(state.query.text)
+            state.searchResults = withContext(Dispatchers.Default) {
+                search(state.query.text)
+            }
+            Log.e("TAG", "SearchCountry: ${state.searchResults},${state.searchDisplay}")
             state.searching = false
         }
         when (state.searchDisplay) {
-            SearchDisplay.Categories -> {}
+            SearchDisplay.Categories -> categories()
             SearchDisplay.Suggestions -> {}
             SearchDisplay.Results -> {
                 LazyColumn(modifier = Modifier.fillMaxSize()) {

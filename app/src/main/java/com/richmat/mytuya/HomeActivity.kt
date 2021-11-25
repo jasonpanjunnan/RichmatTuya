@@ -22,7 +22,7 @@
 //import androidx.compose.ui.tooling.preview.Preview
 //import androidx.compose.ui.unit.dp
 //import androidx.lifecycle.viewmodel.compose.viewModel
-//import com.example.compose.jetsurvey.theme.JetsurveyTheme
+//import com.richmat.mytuya.ui.theme.JetsurveyTheme
 //import com.richmat.mytuya.ui.newHome.homeViewmoel.HomeViewModel
 //import com.richmat.mytuya.util.data.Home
 //import com.richmat.mytuya.util.data.Home.currentHomeBean

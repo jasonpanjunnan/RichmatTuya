@@ -26,13 +26,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
-import com.example.compose.jetsurvey.theme.JetsurveyTheme
+import com.richmat.mytuya.ui.theme.JetsurveyTheme
 import com.example.compose.jetsurvey.theme.Red800
 import com.richmat.mytuya.R
 import com.richmat.mytuya.ui.components.DevPicAndName
-import com.richmat.mytuya.ui.deviceSurface.getOffsetByAngle
 import com.richmat.mytuya.ui.deviceSurface.getOffsetByRadian
-import com.richmat.mytuya.ui.deviceSurface.getOffsetByRadians
 import com.richmat.mytuya.ui.deviceSurface.isOverAngle
 import com.richmat.mytuya.ui.searchResult.RenameDialog
 import kotlin.math.*

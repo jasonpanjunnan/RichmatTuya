@@ -33,7 +33,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.alibaba.fastjson.JSON
-import com.example.compose.jetsurvey.theme.JetsurveyTheme
+import com.richmat.mytuya.ui.theme.JetsurveyTheme
 import com.example.compose.jetsurvey.theme.Red300
 import com.example.compose.jetsurvey.theme.Red800
 import com.richmat.mytuya.MyApplication

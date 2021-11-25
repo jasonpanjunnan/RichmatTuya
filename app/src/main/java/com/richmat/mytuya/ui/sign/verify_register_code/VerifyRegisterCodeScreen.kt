@@ -1,4 +1,4 @@
-package com.richmat.mytuya.ui.sign.forget_password_login
+package com.richmat.mytuya.ui.sign.verify_register_code
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -9,15 +9,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import com.richmat.mytuya.ui.newHome.TabItem
+import com.richmat.mytuya.ui.newHome.Login
 import com.richmat.mytuya.ui.sign.forget_password_login.compoments.SimpleVerificationCodeItem
 import com.richmat.mytuya.ui.sign.forget_password_login.compoments.VerificationCodeField
 
 @Composable
-fun ForgetLoginScreen(
+fun VerifyRegisterCodeScreen(
     navController: NavController,
-    viewModel: ForgetLoginViewModel = hiltViewModel(),
+    viewModel: VerifyRegisterCodeViewModel = hiltViewModel(),
 ) {
     Scaffold(
         topBar = {
@@ -41,23 +40,14 @@ fun ForgetLoginScreen(
                 .padding(horizontal = 32.dp)
                 .padding(top = 40.dp)
         ) {
-            Text(text = "忘记密码", style = MaterialTheme.typography.h6)
+            Text(text = "输入验证码", style = MaterialTheme.typography.h6)
             Spacer(modifier = Modifier.height(32.dp))
             VerificationCodeField(6,
                 inputCallback = {
-                    viewModel.onEvent(ForgetLoginEvent.ForgetLogin(it) {
-                        navController.navigate((TabItem.HomeTab.page.route)) {
-                            //清空顶上的回收栈
-                            navController.popBackStack()
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                //此项可控制是否退出首项 StartDestination
-                                inclusive = true
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    })
+                    navController.navigate(
+                        Login.SetAccountPasswordScreen.route +
+                                "?countryCode=${viewModel.countryCode}&phone=${viewModel.phone}&verify_code=${it}"
+                    )
                 }) { text, focused ->
                 SimpleVerificationCodeItem(text, focused)
             }

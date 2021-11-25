@@ -17,7 +17,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.compose.jetsurvey.signinsignup.PasswordState
-import com.example.compose.jetsurvey.theme.JetsurveyTheme
+import com.richmat.mytuya.ui.theme.JetsurveyTheme
 import com.richmat.mytuya.R
 import com.richmat.mytuya.ui.components.Email
 import com.richmat.mytuya.ui.components.Password

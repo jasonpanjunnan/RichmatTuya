@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.compose.jetsurvey.theme.JetsurveyTheme
+import com.richmat.mytuya.ui.theme.JetsurveyTheme
 import com.example.compose.jetsurvey.theme.Red800
 import com.example.compose.jetsurvey.theme.Write300
 import com.richmat.mytuya.R

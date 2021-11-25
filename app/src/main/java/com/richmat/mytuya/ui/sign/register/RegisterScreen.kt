@@ -1,4 +1,4 @@
-package com.richmat.mytuya.ui.sign.send_verify_code
+package com.richmat.mytuya.ui.sign.register
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -20,9 +20,9 @@ import com.richmat.mytuya.util.getCountryCode
 import com.richmat.mytuya.util.getCountryName
 
 @Composable
-fun SendVerifyCodeScreen(
+fun RegisterScreen(
     navController: NavController,
-    viewModel: SendVerifyCodeViewModel = hiltViewModel(),
+    viewModel: RegisterViewModel = hiltViewModel(),
 ) {
     val phone = viewModel.phone.value
     val country by viewModel.currentCountry.collectAsState()
@@ -49,11 +49,10 @@ fun SendVerifyCodeScreen(
                 .padding(horizontal = 32.dp)
                 .padding(top = 40.dp)
         ) {
-            Text(text = "忘记密码", style = MaterialTheme.typography.h6)
+            Text(text = "注册", style = MaterialTheme.typography.h4)
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = {
                 navController.navigate(Login.SelectCountryScreen.route)
-
             },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)) {
@@ -70,20 +69,20 @@ fun SendVerifyCodeScreen(
                 textStyle = MaterialTheme.typography.body1,
                 modifier = Modifier.fillMaxWidth(),
                 onValueChange = {
-                    viewModel.onEvent(SendVerifyCodeEvent.EnterPhone(it))
+                    viewModel.onEvent(RegisterEvent.EnterPhone(it))
                 }, label = {
                     Text(text = "手机号")
                 })
             Spacer(modifier = Modifier.height(32.dp))
             Button(onClick = {
-                viewModel.onEvent(SendVerifyCodeEvent.SendVerifyCodeWithUserName(
+                viewModel.onEvent(RegisterEvent.SendVerifyCodeWithUserName(
                     "",
                     phone,
                     country.getCountryCode(),
-                    2
+                    1
                 ) {
                     navController.navigate(
-                        Login.ForgetLoginScreen.route +
+                        Login.VerifyRegisterCodeScreen.route +
                                 "?countryCode=${country.getCountryCode()}&phone=${phone}"
                     )
                 })

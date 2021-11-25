@@ -44,4 +44,13 @@ interface UserRepository {
     suspend fun selectedCurrentCountry(country: CountryRespBean)
 
     fun observeCountry(): Flow<CountryRespBean>
+
+    suspend fun register(
+        countryCode: String,
+        phone: String,
+        password: String,
+        code: String,
+    ): Boolean
+
+    suspend fun touristRegisterAndLogin(countryCode: String):Boolean
 }

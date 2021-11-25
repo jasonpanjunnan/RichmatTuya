@@ -11,7 +11,8 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.ExperimentalComposeUiApi
-import com.example.compose.jetsurvey.theme.JetsurveyTheme
+import com.richmat.mytuya.ui.newHome.HomeScreen
+import com.richmat.mytuya.ui.theme.JetsurveyTheme
 import com.richmat.mytuya.ui.newHome.Page
 import com.tuya.smart.home.sdk.TuyaHomeSdk
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,7 +41,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             JetsurveyTheme {
-                com.richmat.mytuya.ui.newHome.HomeScreen(startPage)
+                HomeScreen(startPage)
 //                HomeScreen()
             }
 //            WelcomeScreen({
@@ -133,9 +134,9 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
-        Log.e("TAG", "dispatchKeyEvent: ${event?.action}， ${event?.keyCode} ")
+//        Log.e("TAG", "dispatchKeyEvent: ${event?.action}， ${event?.keyCode} ")
         if (event?.keyCode == KeyEvent.KEYCODE_BACK && mNeedBackGesture) {
-            Log.e("TAG", "dispatchKeyEvent: 成功拦截，你想干什么")
+//            Log.e("TAG", "dispatchKeyEvent: 成功拦截，你想干什么")
             return true
         }
         return super.dispatchKeyEvent(event)

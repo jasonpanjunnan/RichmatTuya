@@ -1,4 +1,4 @@
-package com.richmat.mytuya.ui.sign.compoments
+package com.richmat.mytuya.ui.sign.register.compoments
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -49,9 +49,9 @@ fun SelectCountryScreen(
                 actions = {},
                 title = {
                     Text(text = "选择国家/地区",
-                        style = MaterialTheme.typography.h5,
+                        style = MaterialTheme.typography.h6,
                         modifier = Modifier
-                            .fillMaxWidth(0.6f)
+                            .fillMaxWidth(0.8f)
                             .wrapContentWidth(CenterHorizontally))
                 }
             )
@@ -64,9 +64,7 @@ fun SelectCountryScreen(
                     viewModel.onEvent(SelectCountryEvent.SelectedCountry(it))
                     navController.navigateUp()
                 },
-                state = state)
-            Divider()
-            if (!state.focused) {
+                state = state){
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(bottom = 10.dp, start = 16.dp, end = 16.dp),
@@ -95,6 +93,36 @@ fun SelectCountryScreen(
                     }
                 }
             }
+//            Divider()
+//            if (!state.focused) {
+//                LazyColumn(
+//                    modifier = Modifier.fillMaxSize(),
+//                    contentPadding = PaddingValues(bottom = 10.dp, start = 16.dp, end = 16.dp),
+//                    state = listState
+//                ) {
+//                    val groups = countries.groupBy { country ->
+//                        country.getCountryPhoneticize()[0].lowercase()
+//                    }
+//                    groups.forEach { (initial, list) ->
+//                        item {
+//                            Text(text = initial.uppercase(),
+//                                modifier = Modifier.fillMaxWidth(),
+//                                style = MaterialTheme.typography.h6)
+//                        }
+//                        items(list) { country ->
+//                            TextButton(onClick = {
+//                                viewModel.onEvent(SelectCountryEvent.SelectedCountry(country))
+//                                navController.navigateUp()
+//                            }, modifier = Modifier.fillMaxWidth()) {
+//                                Text(text = country.getCountryName(),
+//                                    modifier = Modifier.fillMaxWidth(),
+//                                    color = MaterialTheme.colors.onPrimary)
+//                            }
+//                            Divider()
+//                        }
+//                    }
+//                }
+//            }
         }
     }
 }

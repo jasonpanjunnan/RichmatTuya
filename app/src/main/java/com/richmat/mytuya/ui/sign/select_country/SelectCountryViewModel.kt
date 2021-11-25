@@ -7,12 +7,9 @@ import com.richmat.mytuya.util.getCountryName
 import com.richmat.mytuya.util.getCountryPhoneticize
 import com.tuya.smart.android.base.bean.CountryRespBean
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -38,19 +35,11 @@ class SelectCountryViewModel @Inject constructor(
                 }
             }
             is SelectCountryEvent.Search -> {
-                var list: List<CountryRespBean> = emptyList()
-                viewModelScope.launch {
-                    list = withContext(Dispatchers.Default) {
-                        delay(200L) // simulate an I/O delay
-                        countries.value.filter {
-                            it.getCountryName().contains(event.text, ignoreCase = true)
-                        }
-                    }
+                return _countries.value.filter {
+                    it.getCountryName().contains(event.text, ignoreCase = true)
                 }
-                return list
             }
         }
         return emptyList()
     }
-
 }

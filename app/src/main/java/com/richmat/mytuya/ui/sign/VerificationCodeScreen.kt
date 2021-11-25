@@ -9,7 +9,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.richmat.mytuya.ui.components.SignInSignUpScreen
 import com.richmat.mytuya.ui.components.SignInSignUpTopAppBar
-import com.example.compose.jetsurvey.theme.JetsurveyTheme
+import com.richmat.mytuya.ui.theme.JetsurveyTheme
 import com.richmat.mytuya.R
 import com.richmat.mytuya.ui.newHome.Page
 import com.richmat.mytuya.util.supportWideScreen

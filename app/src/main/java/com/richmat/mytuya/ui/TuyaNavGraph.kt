@@ -2,11 +2,7 @@ package com.richmat.mytuya.ui
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.*
@@ -20,7 +16,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
-import com.example.compose.jetsurvey.theme.JetsurveyTheme
+import com.richmat.mytuya.ui.theme.JetsurveyTheme
 import com.richmat.mytuya.mNeedBackGesture
 import com.richmat.mytuya.ui.device.gateway.ChildSearchViewModel
 import com.richmat.mytuya.ui.device.gateway.ChildSearchViewModel.Companion.SEARCH_CHILD_KEY
@@ -45,9 +41,13 @@ import com.richmat.mytuya.ui.searchResult.SearchResultScreen
 import com.richmat.mytuya.ui.searchResult.SearchResultViewModel
 import com.richmat.mytuya.ui.setting.SettingScreen
 import com.richmat.mytuya.ui.sign.*
-import com.richmat.mytuya.ui.sign.compoments.SelectCountryScreen
+import com.richmat.mytuya.ui.sign.register.compoments.SelectCountryScreen
 import com.richmat.mytuya.ui.sign.forget_password_login.ForgetLoginScreen
+import com.richmat.mytuya.ui.sign.register.RegisterScreen
 import com.richmat.mytuya.ui.sign.send_verify_code.SendVerifyCodeScreen
+import com.richmat.mytuya.ui.sign.set_account_password.SetAccountPasswordScreen
+import com.richmat.mytuya.ui.sign.sign_in.SignInScreen
+import com.richmat.mytuya.ui.sign.verify_register_code.VerifyRegisterCodeScreen
 import kotlinx.coroutines.InternalCoroutinesApi
 
 //TODO 要把viewmodel提出来，使用uiStates传入。10.28 没必要，传状态不好找，再封一层即可
@@ -229,6 +229,7 @@ fun NavGraphBuilder.composableHome(navController: NavHostController) {
     }
 }
 
+@ExperimentalMaterialApi
 @ExperimentalAnimationApi
 fun NavGraphBuilder.composableSignIn(navController: NavHostController) {
     composable(Page.SignIn.route) {
@@ -447,29 +448,48 @@ fun NavGraphBuilder.composableSelectCountryScreen(navController: NavHostControll
     }
 }
 
-//composable(
-//route = Screen.AddEditNoteScreen.route +
-//"?noteId={noteId}&noteColor={noteColor}",
-//arguments = listOf(
-//navArgument(
-//name = "noteId"
-//) {
-//    type = NavType.IntType
-//    defaultValue = -1
-//},
-//navArgument(
-//name = "noteColor"
-//) {
-//    type = NavType.IntType
-//    defaultValue = -1
-//},
-//)
-//) {
-//    val color = it.arguments?.getInt("noteColor") ?: -1
-//    AddEditNoteScreen(
-//        navController = navController,
-//        noteColor = color
-//    )
-//}
+@ExperimentalAnimationApi
+fun NavGraphBuilder.composableRegisterScreen(navController: NavHostController) {
+    composable(route = Login.RegisterScreen.route) {
+        RegisterScreen(navController = navController)
+    }
+}
 
-//savedStateHandle.get<Int>("noteId")?.let { noteId ->
+@ExperimentalAnimationApi
+fun NavGraphBuilder.composableVerifyRegisterCodeScreen(navController: NavHostController) {
+    composable(
+        //必须要的可以使用“//”,可选的最好加判断
+        route = Login.VerifyRegisterCodeScreen.route + "?countryCode={countryCode}&phone={phone}",
+        arguments = listOf(navArgument(name = "countryCode") {
+            type = NavType.StringType
+            defaultValue = "86"
+        }, navArgument(name = "phone") {
+            type = NavType.StringType
+            defaultValue = "13666666666"
+        })
+    ) { backStackEntry ->
+        VerifyRegisterCodeScreen(navController = navController,
+            viewModel = hiltViewModel(backStackEntry))
+    }
+}
+
+@ExperimentalAnimationApi
+fun NavGraphBuilder.composableSetAccountPasswordScreen(navController: NavHostController) {
+    composable(
+        //必须要的可以使用“//”,可选的最好加判断
+        route = Login.SetAccountPasswordScreen.route + "?countryCode={countryCode}&phone={phone}&verify_code={verify_code}",
+        arguments = listOf(navArgument(name = "countryCode") {
+            type = NavType.StringType
+            defaultValue = "86"
+        }, navArgument(name = "phone") {
+            type = NavType.StringType
+            defaultValue = "13666666666"
+        }, navArgument(name = "verify_code") {
+            type = NavType.StringType
+            defaultValue = "666666"
+        })
+    ) { backStackEntry ->
+        SetAccountPasswordScreen(navController = navController,
+            viewModel = hiltViewModel(backStackEntry))
+    }
+}

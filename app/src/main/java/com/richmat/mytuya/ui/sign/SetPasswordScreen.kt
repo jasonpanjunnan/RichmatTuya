@@ -6,11 +6,13 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.richmat.mytuya.ui.components.SignInSignUpScreen
 import com.richmat.mytuya.ui.components.SignInSignUpTopAppBar
-import com.example.compose.jetsurvey.theme.JetsurveyTheme
+import com.richmat.mytuya.ui.theme.JetsurveyTheme
 import com.richmat.mytuya.R
 import com.richmat.mytuya.ui.newHome.TabItem
 import com.richmat.mytuya.util.supportWideScreen
@@ -49,4 +51,10 @@ fun SetPasswordScreen(navController: NavHostController) {
             }
         )
     }
+}
+
+@Preview
+@Composable
+fun ShowSetPasswordScreen() {
+    SetPasswordScreen(rememberNavController())
 }

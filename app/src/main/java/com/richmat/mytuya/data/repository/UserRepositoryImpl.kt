@@ -1,7 +1,10 @@
 package com.richmat.mytuya.data.repository
 
+import android.os.Build
+import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.richmat.mytuya.MyApplication
 import com.richmat.mytuya.data.data_source.UserDao
 import com.richmat.mytuya.ui.domain.model.User
@@ -9,6 +12,7 @@ import com.richmat.mytuya.ui.domain.repository.UserRepository
 import com.richmat.mytuya.util.default
 import com.tuya.smart.android.base.bean.CountryRespBean
 import com.tuya.smart.android.user.api.ILoginCallback
+import com.tuya.smart.android.user.api.IRegisterCallback
 import com.tuya.smart.android.user.api.IWhiteListCallback
 import com.tuya.smart.android.user.bean.WhiteList
 import com.tuya.smart.home.sdk.TuyaHomeSdk
@@ -168,4 +172,64 @@ class UserRepositoryImpl(
     }
 
     override fun observeCountry(): Flow<CountryRespBean> = currentCountry
+
+    override suspend fun register(
+        countryCode: String,
+        phone: String,
+        password: String,
+        code: String,
+    ): Boolean {
+        return suspendCoroutine { continuation ->
+            // 注册手机密码账户
+            TuyaHomeSdk.getUserInstance().registerAccountWithPhone(
+                countryCode,
+                phone,
+                password,
+                code,
+                object : IRegisterCallback {
+                    override fun onSuccess(user: com.tuya.smart.android.user.bean.User) {
+                        continuation.resume(true)
+                        Toast.makeText(MyApplication.context, "注册成功", Toast.LENGTH_SHORT).show()
+                    }
+
+                    override fun onError(code: String, error: String) {
+                        continuation.resumeWithException(Exception("$code////$error"))
+                        Toast.makeText(
+                            MyApplication.context,
+                            "code: " + code + "error:" + error,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                })
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N_MR1)
+    override suspend fun touristRegisterAndLogin(countryCode: String): Boolean {
+//                游客账号登陆,获取手机名称作为游客名称。华为、小米等手机获取到的是手机型号
+        val request = Settings.Global.getString(MyApplication.context.contentResolver,
+            Settings.Global.DEVICE_NAME)
+        Log.e("TAG", "touristRegisterAndLogin: $request")
+
+        return suspendCoroutine { continuation ->
+            TuyaHomeSdk.getUserInstance().touristRegisterAndLogin(countryCode, request,
+                object : IRegisterCallback {
+                    override fun onSuccess(user: com.tuya.smart.android.user.bean.User) {
+                        Toast.makeText(MyApplication.context, "onSuccess:", Toast.LENGTH_SHORT)
+                            .show()
+                        Log.e("TAG", "游客登录成功:${user.nickName} ")
+                        continuation.resume(true)
+                    }
+
+                    override fun onError(code: String?, error: String?) {
+                        Toast.makeText(MyApplication.context,
+                            "onError: $code, $error",
+                            Toast.LENGTH_SHORT)
+                            .show()
+                        continuation.resumeWithException(Exception("$code////$error"))
+                        Log.e("TAG", "onError: $code, $error")
+                    }
+                })
+        }
+    }
 }

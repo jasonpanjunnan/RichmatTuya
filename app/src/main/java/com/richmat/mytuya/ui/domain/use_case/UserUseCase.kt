@@ -9,5 +9,7 @@ data class UserUseCase(
     val sendVerifyCode: SendVerifyCode,
     val getCountries: GetCountries,
     val observeCountry: ObserveCountry,
-    val selectedCurrentCountry:SelectedCurrentCountry
+    val selectedCurrentCountry: SelectedCurrentCountry,
+    val register: Register,
+    val touristRegisterAndLogin:TouristRegisterAndLogin
 )

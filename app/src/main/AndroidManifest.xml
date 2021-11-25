@@ -3,15 +3,12 @@
     package="com.richmat.mytuya">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
-
     <application
         android:name=".MyApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/Theme.MyTuYa"
-        >
+        android:theme="@style/Theme.MyTuYa">
 
         <meta-data
             android:name="TUYA_SMART_APPKEY"
@@ -31,9 +28,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<!--        <activity android:name=".HomeActivity" />-->
-
-
+        <!--        <activity android:name=".HomeActivity" />-->
     </application>
-
 </manifest>

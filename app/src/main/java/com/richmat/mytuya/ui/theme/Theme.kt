@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.compose.jetsurvey.theme
+package com.richmat.mytuya.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.Colors
@@ -23,6 +23,7 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import com.example.compose.jetsurvey.theme.*
 
 val LightThemeColors = lightColors(
     primary = Red400,
@@ -77,9 +78,4 @@ fun JetsurveyTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composa
         shapes = Shapes,
         content = content
     )
-}
-
-@Composable
-fun NewTuyaTheme() {
-
 }

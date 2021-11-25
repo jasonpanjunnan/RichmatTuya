@@ -144,6 +144,9 @@ fun AnimationHomeNavHost(navController: NavHostController, startPage: Page) {
         composableSendVerifyCodeScreen(navController)
         composableForgetLoginScreen(navController)
         composableSelectCountryScreen(navController)
+        composableRegisterScreen(navController)
+        composableVerifyRegisterCodeScreen(navController)
+        composableSetAccountPasswordScreen(navController)
     }
 }
 
