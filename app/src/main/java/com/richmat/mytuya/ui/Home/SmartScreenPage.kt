@@ -1,4 +1,4 @@
-package com.richmat.mytuya.ui.newHome
+package com.richmat.mytuya.ui.Home
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Box

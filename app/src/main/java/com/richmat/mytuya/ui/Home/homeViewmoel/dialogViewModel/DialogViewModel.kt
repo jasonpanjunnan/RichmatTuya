@@ -1,4 +1,4 @@
-package com.richmat.mytuya.ui.newHome.homeViewmoel.dialogViewModel
+package com.richmat.mytuya.ui.Home.homeViewmoel.dialogViewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

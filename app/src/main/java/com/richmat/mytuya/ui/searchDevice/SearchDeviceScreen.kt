@@ -39,7 +39,7 @@ import com.example.compose.jetsurvey.theme.Red800
 import com.richmat.mytuya.MyApplication
 import com.richmat.mytuya.R
 import com.richmat.mytuya.ui.components.FullScreenLoading
-import com.richmat.mytuya.ui.newHome.Page
+import com.richmat.mytuya.ui.Home.Page
 import kotlinx.coroutines.InternalCoroutinesApi
 
 @ExperimentalMaterialApi

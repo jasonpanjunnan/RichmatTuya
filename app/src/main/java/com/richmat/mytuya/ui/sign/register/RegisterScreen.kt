@@ -15,7 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.richmat.mytuya.ui.newHome.Login
+import com.richmat.mytuya.ui.Home.Login
 import com.richmat.mytuya.util.getCountryCode
 import com.richmat.mytuya.util.getCountryName
 

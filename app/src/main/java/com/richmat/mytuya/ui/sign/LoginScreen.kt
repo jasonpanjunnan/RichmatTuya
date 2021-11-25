@@ -11,7 +11,6 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -19,8 +18,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import com.richmat.mytuya.ui.newHome.Login
-import com.richmat.mytuya.ui.newHome.TabItem
+import com.richmat.mytuya.ui.Home.Login
+import com.richmat.mytuya.ui.Home.TabItem
 import com.richmat.mytuya.util.getCountryCode
 import com.richmat.mytuya.util.getCountryName
 

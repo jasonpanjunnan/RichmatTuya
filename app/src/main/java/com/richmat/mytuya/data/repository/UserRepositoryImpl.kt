@@ -11,9 +11,7 @@ import com.richmat.mytuya.ui.domain.model.User
 import com.richmat.mytuya.ui.domain.repository.UserRepository
 import com.richmat.mytuya.util.default
 import com.tuya.smart.android.base.bean.CountryRespBean
-import com.tuya.smart.android.user.api.ILoginCallback
-import com.tuya.smart.android.user.api.IRegisterCallback
-import com.tuya.smart.android.user.api.IWhiteListCallback
+import com.tuya.smart.android.user.api.*
 import com.tuya.smart.android.user.bean.WhiteList
 import com.tuya.smart.home.sdk.TuyaHomeSdk
 import com.tuya.smart.sdk.api.IResultCallback
@@ -22,6 +20,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import java.io.File
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -142,6 +141,32 @@ class UserRepositoryImpl(
         }
     }
 
+    override fun getTuyaUser(): com.tuya.smart.android.user.bean.User? {
+        return TuyaHomeSdk.getUserInstance().user
+    }
+
+    override suspend fun getTuyaUserByUpdate(): com.tuya.smart.android.user.bean.User? {
+        return if (updateUserInfo()) {
+            getTuyaUser()
+        } else {
+            null
+        }
+    }
+
+    override suspend fun updateUserInfo(): Boolean {
+        return suspendCoroutine { continuation ->
+            TuyaHomeSdk.getUserInstance().updateUserInfo(object : IResultCallback {
+                override fun onError(code: String, error: String) {
+                    continuation.resumeWithException(Exception("$code////$error"))
+                }
+
+                override fun onSuccess() {
+                    continuation.resume(true)
+                }
+            })
+        }
+    }
+
     override suspend fun getCountries(): String {
         return suspendCoroutine { continuation ->
             //插值器，应该可以根据输入获取想要的数据
@@ -228,6 +253,37 @@ class UserRepositoryImpl(
                             .show()
                         continuation.resumeWithException(Exception("$code////$error"))
                         Log.e("TAG", "onError: $code, $error")
+                    }
+                })
+        }
+    }
+
+    override suspend fun updateNickName(nickName: String): Boolean {
+        return suspendCoroutine { continuation ->
+            TuyaHomeSdk.getUserInstance().updateNickName(nickName,
+                object : IReNickNameCallback {
+                    override fun onSuccess() {
+                        continuation.resume(true)
+                    }
+
+                    override fun onError(code: String, error: String) {
+                        continuation.resumeWithException(Exception("$code////$error"))
+                    }
+                })
+        }
+    }
+
+    override suspend fun uploadUserAvatar(file: File): Boolean {
+        return suspendCoroutine { continuation ->
+            TuyaHomeSdk.getUserInstance().uploadUserAvatar(
+                file,
+                object : IBooleanCallback {
+                    override fun onSuccess() {
+                        continuation.resume(true)
+                    }
+
+                    override fun onError(code: String, error: String) {
+                        continuation.resumeWithException(Exception("$code////$error"))
                     }
                 })
         }

@@ -25,8 +25,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.compose.jetsurvey.theme.Orange800
 import com.richmat.mytuya.R
-import com.richmat.mytuya.ui.newHome.Login
-import com.richmat.mytuya.ui.newHome.TabItem
+import com.richmat.mytuya.ui.Home.Login
+import com.richmat.mytuya.ui.Home.TabItem
 import com.richmat.mytuya.util.getCountryCode
 import com.richmat.mytuya.util.getCountryName
 import com.richmat.mytuya.util.supportWideScreen

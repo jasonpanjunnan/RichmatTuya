@@ -1,4 +1,4 @@
-package com.richmat.mytuya.ui.newHome
+package com.richmat.mytuya.ui.Home
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons

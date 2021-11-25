@@ -3,6 +3,7 @@ package com.richmat.mytuya.ui.domain.repository
 import com.richmat.mytuya.ui.domain.model.User
 import com.tuya.smart.android.base.bean.CountryRespBean
 import kotlinx.coroutines.flow.Flow
+import java.io.File
 
 interface UserRepository {
     fun getUsers(): Flow<List<User>>
@@ -52,5 +53,15 @@ interface UserRepository {
         code: String,
     ): Boolean
 
-    suspend fun touristRegisterAndLogin(countryCode: String):Boolean
+    suspend fun touristRegisterAndLogin(countryCode: String): Boolean
+
+    suspend fun updateNickName(nickName: String): Boolean
+
+    suspend fun uploadUserAvatar(file: File): Boolean
+
+    fun getTuyaUser():com.tuya.smart.android.user.bean.User?
+
+    suspend fun getTuyaUserByUpdate():com.tuya.smart.android.user.bean.User?
+
+    suspend fun updateUserInfo():Boolean
 }

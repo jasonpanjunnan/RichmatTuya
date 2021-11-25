@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.statusBarsPadding
-import com.richmat.mytuya.ui.newHome.Page
+import com.richmat.mytuya.ui.Home.Page
 
 @ExperimentalAnimationApi
 @Composable

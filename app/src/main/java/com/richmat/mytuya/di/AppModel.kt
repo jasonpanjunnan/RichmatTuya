@@ -37,7 +37,7 @@ class AppModule {
     @Singleton
     fun provideUserUseCase(repository: UserRepository): UserUseCase {
         return UserUseCase(
-            getUser = GetUser(repository),
+            getUserById = GetUserById(repository),
             getUsers = GetUsers(repository),
             login = Login(repository),
             insertUser = InsertUser(repository),
@@ -47,7 +47,11 @@ class AppModule {
             observeCountry = ObserveCountry(repository),
             selectedCurrentCountry = SelectedCurrentCountry(repository),
             register = Register(repository),
-            touristRegisterAndLogin = TouristRegisterAndLogin(repository)
+            touristRegisterAndLogin = TouristRegisterAndLogin(repository),
+            updateNickName = UpdateNickName(repository),
+            uploadUserAvatar = UploadUserAvatar(repository),
+            getTuyaUser = GetTuyaUser(repository),
+            getTuyaUserByUpdate = GetTuyaUserByUpdate(repository)
         )
     }
 }

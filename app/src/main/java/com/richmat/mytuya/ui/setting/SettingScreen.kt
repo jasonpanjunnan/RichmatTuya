@@ -17,7 +17,7 @@ import com.richmat.mytuya.ui.components.SignInSignUpTopAppBar
 import com.example.compose.jetsurvey.theme.Red800
 import com.richmat.mytuya.MyApplication
 import com.richmat.mytuya.R
-import com.richmat.mytuya.ui.newHome.Page
+import com.richmat.mytuya.ui.Home.Page
 import com.tuya.smart.android.user.api.ILogoutCallback
 import com.tuya.smart.home.sdk.TuyaHomeSdk
 

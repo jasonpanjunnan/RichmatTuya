@@ -2,7 +2,6 @@ package com.richmat.mytuya
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,9 +10,9 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.ExperimentalComposeUiApi
-import com.richmat.mytuya.ui.newHome.HomeScreen
+import com.richmat.mytuya.ui.Home.HomeScreen
 import com.richmat.mytuya.ui.theme.JetsurveyTheme
-import com.richmat.mytuya.ui.newHome.Page
+import com.richmat.mytuya.ui.Home.Page
 import com.tuya.smart.home.sdk.TuyaHomeSdk
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.InternalCoroutinesApi

@@ -21,10 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
-import com.alibaba.fastjson.JSON
 import com.richmat.mytuya.R
-import com.richmat.mytuya.ui.newHome.DevicePage
-import com.richmat.mytuya.util.data.DevResultMassage
+import com.richmat.mytuya.ui.Home.DevicePage
 import com.tuya.smart.sdk.bean.DeviceBean
 
 @ExperimentalFoundationApi

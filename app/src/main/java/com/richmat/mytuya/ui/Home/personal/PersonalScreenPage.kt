@@ -1,4 +1,4 @@
-package com.richmat.mytuya.ui.newHome
+package com.richmat.mytuya.ui.Home
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.richmat.mytuya.ui.Home.personal.PersonalScreen
 
 @ExperimentalFoundationApi
 @Composable

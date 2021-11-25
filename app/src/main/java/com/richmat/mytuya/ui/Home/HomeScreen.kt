@@ -1,4 +1,4 @@
-package com.richmat.mytuya.ui.newHome
+package com.richmat.mytuya.ui.Home
 
 import android.os.Build
 import android.util.Log
@@ -19,7 +19,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.richmat.mytuya.data.posts.Imp.FakePostsRepository
 import com.richmat.mytuya.ui.*
-import com.richmat.mytuya.ui.newHome.homeViewmoel.dialogViewModel.DialogViewModel
+import com.richmat.mytuya.ui.Home.homeViewmoel.dialogViewModel.DialogViewModel
 import com.richmat.mytuya.util.data.TAG
 import com.tuya.smart.sdk.bean.DeviceBean
 import kotlinx.coroutines.CoroutineScope

@@ -485,7 +485,6 @@ class FakePostsRepository @Inject constructor() : PostsRepository {
                     override fun onSuccess() {
                         continuation.resume(true)
                     }
-
                 })
             }
         }

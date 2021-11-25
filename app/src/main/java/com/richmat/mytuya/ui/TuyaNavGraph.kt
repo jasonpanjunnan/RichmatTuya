@@ -5,7 +5,10 @@ import androidx.annotation.RequiresApi
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -16,8 +19,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
-import com.richmat.mytuya.ui.theme.JetsurveyTheme
 import com.richmat.mytuya.mNeedBackGesture
+import com.richmat.mytuya.ui.Home.*
+import com.richmat.mytuya.ui.Home.homeViewmoel.HomeViewModel
 import com.richmat.mytuya.ui.device.gateway.ChildSearchViewModel
 import com.richmat.mytuya.ui.device.gateway.ChildSearchViewModel.Companion.SEARCH_CHILD_KEY
 import com.richmat.mytuya.ui.device.gateway.GateWayScreen
@@ -30,8 +34,6 @@ import com.richmat.mytuya.ui.deviceSurface.BodySensorScreen
 import com.richmat.mytuya.ui.deviceSurface.BulbLight
 import com.richmat.mytuya.ui.deviceSurface.viewModel.BodySensorViewModel
 import com.richmat.mytuya.ui.deviceSurface.viewModel.BulbLightViewModel
-import com.richmat.mytuya.ui.newHome.*
-import com.richmat.mytuya.ui.newHome.homeViewmoel.HomeViewModel
 import com.richmat.mytuya.ui.searchDevice.SearchDeviceScreen
 import com.richmat.mytuya.ui.searchDevice.SearchDeviceViewModel
 import com.richmat.mytuya.ui.searchDevice.SelectDeviceScreen
@@ -41,13 +43,14 @@ import com.richmat.mytuya.ui.searchResult.SearchResultScreen
 import com.richmat.mytuya.ui.searchResult.SearchResultViewModel
 import com.richmat.mytuya.ui.setting.SettingScreen
 import com.richmat.mytuya.ui.sign.*
-import com.richmat.mytuya.ui.sign.register.compoments.SelectCountryScreen
 import com.richmat.mytuya.ui.sign.forget_password_login.ForgetLoginScreen
 import com.richmat.mytuya.ui.sign.register.RegisterScreen
+import com.richmat.mytuya.ui.sign.register.compoments.SelectCountryScreen
 import com.richmat.mytuya.ui.sign.send_verify_code.SendVerifyCodeScreen
 import com.richmat.mytuya.ui.sign.set_account_password.SetAccountPasswordScreen
 import com.richmat.mytuya.ui.sign.sign_in.SignInScreen
 import com.richmat.mytuya.ui.sign.verify_register_code.VerifyRegisterCodeScreen
+import com.richmat.mytuya.ui.theme.JetsurveyTheme
 import kotlinx.coroutines.InternalCoroutinesApi
 
 //TODO 要把viewmodel提出来，使用uiStates传入。10.28 没必要，传状态不好找，再封一层即可

@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import com.richmat.mytuya.ui.newHome.TabItem
+import com.richmat.mytuya.ui.Home.TabItem
 import com.richmat.mytuya.ui.sign.forget_password_login.compoments.SimpleVerificationCodeItem
 import com.richmat.mytuya.ui.sign.forget_password_login.compoments.VerificationCodeField
 

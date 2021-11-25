@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.richmat.mytuya.ui.newHome.Login
+import com.richmat.mytuya.ui.Home.Login
 import com.richmat.mytuya.ui.sign.forget_password_login.compoments.SimpleVerificationCodeItem
 import com.richmat.mytuya.ui.sign.forget_password_login.compoments.VerificationCodeField
 

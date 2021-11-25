@@ -16,9 +16,8 @@ import androidx.navigation.NavHostController
 import com.richmat.mytuya.R
 import com.richmat.mytuya.ui.components.NewGrid
 import com.richmat.mytuya.ui.components.SignInSignUpTopAppBar
-import com.richmat.mytuya.ui.deviceSetting.DevSettingInfo
-import com.richmat.mytuya.ui.newHome.DevicePage
-import com.richmat.mytuya.ui.newHome.Page
+import com.richmat.mytuya.ui.Home.DevicePage
+import com.richmat.mytuya.ui.Home.Page
 
 @ExperimentalFoundationApi
 @Composable

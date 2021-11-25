@@ -1,4 +1,4 @@
-package com.richmat.mytuya.ui.newHome
+package com.richmat.mytuya.ui.Home
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -40,8 +40,8 @@ import com.richmat.mytuya.R
 import com.richmat.mytuya.ui.components.HomeMenu
 import com.richmat.mytuya.ui.components.NewGrid
 import com.richmat.mytuya.ui.components.NewHomeMenu
-import com.richmat.mytuya.ui.newHome.homeViewmoel.Delete
-import com.richmat.mytuya.ui.newHome.homeViewmoel.HomeViewModel
+import com.richmat.mytuya.ui.Home.homeViewmoel.Delete
+import com.richmat.mytuya.ui.Home.homeViewmoel.HomeViewModel
 import com.tuya.smart.sdk.bean.DeviceBean
 import com.tuya.smart.sdk.bean.GroupBean
 import kotlinx.coroutines.InternalCoroutinesApi

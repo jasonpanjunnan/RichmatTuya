@@ -1,7 +1,7 @@
 package com.richmat.mytuya.util.data
 
 import android.os.Parcelable
-import com.richmat.mytuya.ui.newHome.DevicePage
+import com.richmat.mytuya.ui.Home.DevicePage
 import com.richmat.mytuya.util.data.DeviceId.BODY_SENSOR
 import com.richmat.mytuya.util.data.DeviceId.Bulb_Light
 import com.richmat.mytuya.util.data.DeviceId.ZIGBEE_GATE

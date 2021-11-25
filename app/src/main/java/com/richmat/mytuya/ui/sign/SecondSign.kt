@@ -23,7 +23,7 @@ import com.richmat.mytuya.ui.components.Email
 import com.richmat.mytuya.ui.components.Password
 import com.richmat.mytuya.ui.components.SignInSignUpScreen
 import com.richmat.mytuya.ui.components.SignInSignUpTopAppBar
-import com.richmat.mytuya.ui.newHome.TabItem
+import com.richmat.mytuya.ui.Home.TabItem
 import com.richmat.mytuya.ui.sign.textFieldState.PhoneState
 import com.richmat.mytuya.util.supportWideScreen
 import com.tuya.smart.android.user.api.ILoginCallback

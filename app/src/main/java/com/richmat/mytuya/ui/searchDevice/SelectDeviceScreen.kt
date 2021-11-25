@@ -25,7 +25,7 @@ import com.example.compose.jetsurvey.theme.Red800
 import com.example.compose.jetsurvey.theme.Write300
 import com.richmat.mytuya.R
 import com.richmat.mytuya.ui.components.SignInSignUpTopAppBar
-import com.richmat.mytuya.ui.newHome.Page
+import com.richmat.mytuya.ui.Home.Page
 import com.tuya.smart.sdk.bean.DeviceBean
 
 @ExperimentalFoundationApi

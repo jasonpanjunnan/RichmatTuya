@@ -1,4 +1,4 @@
-package com.richmat.mytuya.ui.newHome
+package com.richmat.mytuya.ui.Home.personal
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
@@ -22,6 +22,7 @@ import androidx.navigation.NavHostController
 import com.example.compose.jetsurvey.theme.Gray100
 import com.example.compose.jetsurvey.theme.Purple700
 import com.richmat.mytuya.R
+import com.richmat.mytuya.ui.Home.Page
 
 @Composable
 fun PersonalScreen(navController: NavHostController) {
