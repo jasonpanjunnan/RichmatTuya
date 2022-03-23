@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.richmat.mytuya">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <application
+        android:name=".MyApplication"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:theme="@style/Theme.MyTuYa">
+
+        <meta-data
+            android:name="TUYA_SMART_APPKEY"
+            android:value="mtk3jfsu74ug3awvufav" />
+        <meta-data
+            android:name="TUYA_SMART_SECRET"
+            android:value="pas9d9gkcmm5cudv9gps5g5557ystu49" />
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.MyTuYa.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!--        <activity android:name=".HomeActivity" />-->
+    </application>
+</manifest>

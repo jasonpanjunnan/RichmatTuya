@@ -1,0 +1,77 @@
+<resources>
+    <string name="app_name">MyTuYa</string>
+    <string name="app_tagline">app_tagline</string>
+    <string name="sign_in_create_account">sign_in_create_account</string>
+    <string name="user_continue">user_continue</string>
+    <string name="dismiss">dismiss</string>
+    <string name="sign_in">sign_in</string>
+    <string name="sign_up">注册</string>
+    <string name="password">password</string>
+    <string name="forgot_password">forgot_password</string>
+    <string name="feature_not_available">feature_not_available</string>
+    <string name="back">back</string>
+    <string name="email">phone</string>
+    <string name="hide_password">hide_password</string>
+    <string name="show_password">show_password</string>
+    <string name="sign_in_guest">sign_in_guest</string>
+    <string name="or">or</string>
+    <string name="create_account">create_account</string>
+    <string name="confirm_password">confirm_password</string>
+    <string name="terms_and_conditions">terms_and_conditions</string>
+
+    <string name="home">home</string>
+    <string name="smart">smart</string>
+    <string name="myself">myself</string>
+    <string name="confirm">确认</string>
+    <string name="verification_code">请输入验证码</string>
+    <string name="set_password">请设置密码</string>
+    <string name="set_setting">设置</string>
+    <string name="gateway">网关</string>
+    <string name="cancel">取消</string>
+    <string name="select_2.4g">选择2.4GHz Wi-Fi 网络并输入密码</string>
+    <string name="hint_2.4g">请确认为2.4GHz</string>
+    <string name="next">下一步</string>
+    <string name="reset">请先重置设备</string>
+    <string name="reset_hint">1.确认指示灯慢闪 \n2.当前为热点模式（ap）\n3.手机连接到网关热点(名称为SmartLife-XXXX、SL-XXXX，或者类似名称)，返回本应用继续添加设备</string>
+    <string name="check">查看</string>
+
+    <string name="device_name">设备名称</string>
+    <string name="device_event_type">事件类型</string>
+    <string name="family_name">家庭名称</string>
+    <string name="occurrence_time">发生时间</string>
+
+    <string name="manually_add">手动添加</string>
+    <string name="gate">网关中控</string>
+    <string name="wifi_zigbee_gate">网关</string>
+    <string name="light">光源</string>
+    <string name="zigbee_white_light">冷暖白光灯</string>
+    <string name="zigbee">Zigbee</string>
+
+    <string name="device_manager">设备管理</string>
+    <string name="remove">移除</string>
+
+    <string name="confirm_remove">确认要移除设备嘛</string>
+    <string name="confirm_remove_text">确认要移除设备嘛</string>
+
+    <string name="timing">定时</string>
+    <string name="connect_device">连接设备</string>
+    <string name="connect_device_hint">搜索过程可能需要2分钟，请不要进行其他操作</string>
+    <string name="connecting">连接中…</string>
+    <string name="connect_success">连接设备成功</string>
+    <string name="connect_success_init">连接设备成功,正在初始化</string>
+    <string name="searched">已搜索到设备</string>
+    <string name="connecting_device">设备配网中</string>
+    <string name="device_init">设备初始化中</string>
+    <string name="complete">完成</string>
+    <string name="add_device_finish">添加成功</string>
+    <string name="add_success">添加设备成功</string>
+
+    <string name="select_gate">选择网关</string>
+    <string name="please_select_gate">Zigbee设备请通过网关连接</string>
+    <string name="please_configure_gate">添加设备需要配置网关，请前往配置</string>
+    <string name="configure_wireless_gate">配置无线网关</string>
+    <string name="rename">重命名</string>
+
+    <string name="all_device">所有设备</string>
+    <string name="search">搜索</string>
+</resources>
